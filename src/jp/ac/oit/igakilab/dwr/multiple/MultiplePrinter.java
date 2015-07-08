@@ -3,6 +3,11 @@ package jp.ac.oit.igakilab.dwr.multiple;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * DWRでJSから呼ばれるメソッドはすべてpublicでなければならない．また，必要なクラスはすべてdwr.xmlに定義されている必要がある．
+ * @author Hiroshi
+ *
+ */
 public class MultiplePrinter {
 
 //    public static void main(String[] args) throws InvalidValueException {
