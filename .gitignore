@@ -1,0 +1,23 @@
+# Java
+*.class
+*.war
+
+# Eclipse
+.project
+.classpath
+.settings
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Build
+out
+build
+bin
+dest
+
+# Other
+*.log
+*.swp
+*.bak

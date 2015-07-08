@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<project name="build-windows">
+  <property name="tomcat.dir" value="C:\\pleiades4.5\\tomcat\\7" />
+  <property name="jre.home" value="C:\\pleiades4.5\\java\7\\jre" />
+
+</project>
