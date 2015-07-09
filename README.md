@@ -78,14 +78,14 @@ DWRを利用することでHTTP/GETの形式でJavaのメソッドを呼ぶこ�
 </dwr>
 ```
  * web.xmlはdwrを利用するための設定(tomcat用)で，dwrの利用（デバッグモード付き）とREST呼び出しのための設定が記述されている．dwr.xmlはJavaのメソッドやオブジェクトをDWRに認識させるための設定になる．
- * 参考：https://github.com/igakilab/multiple-dwr/tree/master/WebContent/WEB-INF/
+ * 参考：https://github.com/igakilab/multiple-dwr/tree/master/WebContent/WEB-INF/ 
 * multiple-dwrプロジェクトにbuild.xml, build-windows.xmlを作成し，下記の記述をコピーしておく．
  * https://github.com/igakilab/multiple-dwr/blob/master/build.xml
  * https://github.com/igakilab/multiple-dwr/blob/master/build-windows.xml
- * build-windows.xmlにはtomcatとjreのホームディレクトリが絶対パスで指定されている．自分のディレクトリ構造と対応づいてるか確認すること．
- * build.xmlを右クリック->実行->Ant Build(2つ並んでるもののうえのほう）を選択
- * buildファイルに従って，コンパイルしてwarファイルが作成され，tomcatのwebappsディレクトリに配置される．
-  * tomcatはver.7の利用を想定している．
- * tomcatのbinディレクトリ内のstartup.batを実行->tomcatが起動し，multiple-dwr.warが配備（デプロイ）される．
- * 正常にtomcatが起動したのを確認後，「http://localhost:8080/multiple-dwr/dwr/jsonp/MultiplePrinter/helloWorld/ryokun/」にアクセス
- * ブラウザに「{ "reply":"ryokun:HelloWorld"}」と表示されたら成功．
+* build-windows.xmlにはtomcatとjreのホームディレクトリが絶対パスで指定されている．自分のディレクトリ構造と対応づいてるか確認すること．
+* build.xmlを右クリック->実行->Ant Build(2つ並んでるもののうえのほう）を選択
+* buildファイルに従って，コンパイルしてwarファイルが作成され，tomcatのwebappsディレクトリに配置される．
+ * tomcatはver.7の利用を想定している．
+* tomcatのbinディレクトリ内のstartup.batを実行->tomcatが起動し，multiple-dwr.warが配備（デプロイ）される．
+* 正常にtomcatが起動したのを確認後，「http://localhost:8080/multiple-dwr/dwr/jsonp/MultiplePrinter/helloWorld/ryokun/」にアクセス
+* ブラウザに「{ "reply":"ryokun:HelloWorld"}」と表示されたら成功．
