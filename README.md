@@ -34,6 +34,8 @@ DWRを利用することでHTTP/GETの形式でJavaのメソッドを呼ぶこ�
  * libに下記jarファイルを入れておく
  * https://github.com/igakilab/multiple-dwr/tree/master/WebContent/WEB-INF/lib
  * WEB-INF以下にweb.xmlとdwr.xmlの2つのファイルを下記内容で作成する
+ * web.xmlはdwrを利用するための設定(tomcat用)で，dwrの利用（デバッグモード付き）とREST呼び出しのための設定が記述されている．dwr.xmlはJavaのメソッドやオブジェクトをDWRに認識させるための設定になる．
+  * 参考：https://github.com/igakilab/multiple-dwr/tree/master/WebContent/WEB-INF/ 
 
 #### web.xml
 ```
@@ -77,9 +79,7 @@ DWRを利用することでHTTP/GETの形式でJavaのメソッドを呼ぶこ�
   </allow>
 </dwr>
 ```
-* web.xmlはdwrを利用するための設定(tomcat用)で，dwrの利用（デバッグモード付き）とREST呼び出しのための設定が記述されている．dwr.xmlはJavaのメソッドやオブジェクトをDWRに認識させるための設定になる．
-* 参考：https://github.com/igakilab/multiple-dwr/tree/master/WebContent/WEB-INF/ 
-* multiple-dwrプロジェクトにbuild.xml, build-windows.xmlを作成し，下記の記述をコピーしておく．
+* multiple-dwrプロジェクト直下にbuild.xml, build-windows.xmlを作成し，下記の記述をコピーしておく．
  * https://github.com/igakilab/multiple-dwr/blob/master/build.xml
  * https://github.com/igakilab/multiple-dwr/blob/master/build-windows.xml
 * build-windows.xmlにはtomcatとjreのホームディレクトリが絶対パスで指定されている．自分のディレクトリ構造と対応づいてるか確認すること．
