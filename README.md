@@ -29,7 +29,7 @@ DWRを利用することでHTTP/GETの形式でJavaのメソッドを呼ぶこ�
 * MultiplePrinterクラス内に下記helloWorldメソッドを作成する
  * https://github.com/igakilab/multiple-dwr/blob/master/src/jp/ac/oit/igakilab/dwr/multiple/MultiplePrinter.java#L81
 * multiple-dwrにWebContentフォルダを作成する．
- * WebContentフォルダ以下にjsフォルダとWEB-INFフォルダを作成する．
+ * WebContentフォルダ以下にWEB-INFフォルダを作成する．
  * WEB-INFフォルダ以下にlibフォルダを作成する
  * libに下記jarファイルを入れておく
  * https://github.com/igakilab/multiple-dwr/tree/master/WebContent/WEB-INF/lib
@@ -109,6 +109,8 @@ DWRを利用することでHTTP/GETの形式でJavaのメソッドを呼ぶこ�
 ```
 * WebContentの直下に下記index.htmlを作成する
  * https://github.com/igakilab/multiple-dwr/blob/master/WebContent/index.html
+* WebContentの直下にjsフォルダを作成して，下記のファイル群をコピーしておく
+ * https://github.com/igakilab/multiple-dwr/tree/master/WebContent/js
 * build.xmlを右クリック->実行->Ant Build(2つ並んでるもののうえのほう）を選択
 * buildファイルに従って，コンパイルしてwarファイルが作成され，tomcatのwebappsディレクトリに配置される．
 * tomcatのbinディレクトリ内のstartup.batを実行->tomcatが起動し，multiple-dwr.warが配備（デプロイ）される．
