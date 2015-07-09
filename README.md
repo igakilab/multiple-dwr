@@ -77,8 +77,8 @@ DWRを利用することでHTTP/GETの形式でJavaのメソッドを呼ぶこ�
   </allow>
 </dwr>
 ```
- * web.xmlはdwrを利用するための設定(tomcat用)で，dwrの利用（デバッグモード付き）とREST呼び出しのための設定が記述されている．dwr.xmlはJavaのメソッドやオブジェクトをDWRに認識させるための設定になる．
- * 参考：https://github.com/igakilab/multiple-dwr/tree/master/WebContent/WEB-INF/ 
+* web.xmlはdwrを利用するための設定(tomcat用)で，dwrの利用（デバッグモード付き）とREST呼び出しのための設定が記述されている．dwr.xmlはJavaのメソッドやオブジェクトをDWRに認識させるための設定になる．
+* 参考：https://github.com/igakilab/multiple-dwr/tree/master/WebContent/WEB-INF/ 
 * multiple-dwrプロジェクトにbuild.xml, build-windows.xmlを作成し，下記の記述をコピーしておく．
  * https://github.com/igakilab/multiple-dwr/blob/master/build.xml
  * https://github.com/igakilab/multiple-dwr/blob/master/build-windows.xml
