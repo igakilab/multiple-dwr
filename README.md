@@ -1,5 +1,5 @@
 #multiple-dwr
-下記学習用リポジトリ
+このリポジトリで学習できること
 
 1. DWRを利用してREST形式でJavaのメソッドを呼ぶ方法
 2. JavaScriptからDWR(Direct Web Remoting)を利用してJavaのメソッドを呼ぶ方法
@@ -29,3 +29,10 @@ DWRを利用することでHTTP/GETの形式でJavaのメソッドを呼ぶこ�
 * MultiplePrinterクラス内に下記helloWorldメソッドを作成する
  * https://github.com/igakilab/multiple-dwr/blob/master/src/jp/ac/oit/igakilab/dwr/multiple/MultiplePrinter.java#L81
 * multiple-dwrにWebContentフォルダを作成する．
+ * WebContentフォルダ以下にjsフォルダとWEB-INFフォルダを作成する．
+ * WEB-INFフォルダ以下にlibフォルダを作成する
+ * libに下記jarファイルを入れておく
+ * https://github.com/igakilab/multiple-dwr/tree/master/WebContent/WEB-INF/lib
+ * WEB-INF以下にweb.xmlとdwr.xmlの2つのファイルを作成する
+ * 参考：https://github.com/igakilab/multiple-dwr/tree/master/WebContent/WEB-INF/
+ * web.xmlはdwrを利用するための設定(tomcat用)で，dwrの利用（デバッグモード付き）とREST呼び出しのための設定が記述されている．dwr.xmlはJavaのメソッドやオブジェクトをDWRに認識させるための設定になる．
