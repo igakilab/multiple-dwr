@@ -1,7 +1,7 @@
 #multiple-dwr
-このプロジェクトで学習できること
+下記学習用リポジトリ
 
-1. REST形式でJavaのメソッドを呼ぶ方法
+1. DWRを利用してREST形式でJavaのメソッドを呼ぶ方法
 2. JavaScriptからDWR(Direct Web Remoting)を利用してJavaのメソッドを呼ぶ方法
 3. jUnitを用いた単体テストの作成
 4. antを用いたテスト・ビルドの方法
@@ -22,4 +22,10 @@
   * 今回作成するeclipseプロジェクトをeclipseのファイル->新規->Javaプロジェクト
   * プロジェクト名を「multiple-dwr」それ以外はデフォルトのまま完了
 
-## REST形式でJavaのメソッドを呼ぶ方法
+## DWRを利用してREST形式でJavaのメソッドを呼ぶ方法
+DWRを利用することでHTTP/GETの形式でJavaのメソッドを呼ぶことができる．返り値はjsonになる．
+* multiple-dwrプロジェクトのsrcフォルダにパッケージを作成する（例：jp.ac.oit.igakilab.dwr.multiple）
+* 作成したパッケージ内にMultiplePrinterクラスを作成する．
+* MultiplePrinterクラス内に下記helloWorldメソッドを作成する
+ * https://github.com/igakilab/multiple-dwr/blob/master/src/jp/ac/oit/igakilab/dwr/multiple/MultiplePrinter.java#L81
+* multiple-dwrにWebContentフォルダを作成する．
