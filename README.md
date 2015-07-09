@@ -89,3 +89,28 @@ DWRを利用することでHTTP/GETの形式でJavaのメソッドを呼ぶこ�
 * tomcatのbinディレクトリ内のstartup.batを実行->tomcatが起動し，multiple-dwr.warが配備（デプロイ）される．
 * 正常にtomcatが起動したのを確認後，「http://localhost:8080/multiple-dwr/dwr/jsonp/MultiplePrinter/helloWorld/ryokun/」にアクセス
 * ブラウザに「{ "reply":"ryokun:HelloWorld"}」と表示されたら成功．
+
+## JavaScriptからDWR(Direct Web Remoting)を利用してJavaのメソッドを呼ぶ方法
+* 上記で作成したmultiple-dwrプロジェクトに追加する形で実施する．
+* 作成したパッケージに下記クラス（InvalidValueException）を追加する．
+ * https://github.com/igakilab/multiple-dwr/blob/master/src/jp/ac/oit/igakilab/dwr/multiple/InvalidValueException.java
+* 同じパッケージに下記クラス（MultipleForm）を追加する
+ * https://github.com/igakilab/multiple-dwr/blob/master/src/jp/ac/oit/igakilab/dwr/multiple/MultipleForm.java
+* MultiplePrinterクラスにexecuteメソッドを追加する
+ * https://github.com/igakilab/multiple-dwr/blob/master/src/jp/ac/oit/igakilab/dwr/multiple/MultiplePrinter.java#L27
+ * JavaScriptからMultipleFormに入った値を受け取り，解釈して返すメソッド
+* dwr.xmlのallowタグの中（createタグの下）に，下記記述を追加する
+ * 参考：https://github.com/igakilab/multiple-dwr/blob/master/WebContent/WEB-INF/dwr.xml
+ * これは呼び出すメソッドの引数あるいは返り値に指定されたBeanをDWRに指定するための定義である
+ * 同様に対象メソッドが例外を投げる場合はその例外を処理するための定義が下記のように必要
+```
+    <convert converter="bean" match="jp.ac.oit.igakilab.dwr.multiple.MultipleForm" />
+    <convert converter="exception" match="java.lang.Exception" />
+```
+* WebContentの直下に下記index.htmlを作成する
+ * https://github.com/igakilab/multiple-dwr/blob/master/WebContent/index.html
+* build.xmlを右クリック->実行->Ant Build(2つ並んでるもののうえのほう）を選択
+* buildファイルに従って，コンパイルしてwarファイルが作成され，tomcatのwebappsディレクトリに配置される．
+* tomcatのbinディレクトリ内のstartup.batを実行->tomcatが起動し，multiple-dwr.warが配備（デプロイ）される．
+* 正常にtomcatが起動したのを確認後，「http://localhost:8080/multiple-dwr/index.html」にアクセス
+* 画面が正常にでて，maxに整数値，multipleに倍数の値を入れて，正常に実行できたらOK
