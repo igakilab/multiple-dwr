@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<project name="multiple-dwr" default="build without test" basedir=".">
+<project name="multiple-dwr" default="deploy" basedir=".">
   <condition property="build-property" value="build-windows.xml">
     <os family="windows" />
   </condition>
