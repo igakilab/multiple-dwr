@@ -1,4 +1,4 @@
-#multiple-dwr
+﻿#multiple-dwr
 このリポジトリで学習できること
 
 1. DWRを利用してREST形式でJavaのメソッドを呼ぶ方法
@@ -116,3 +116,10 @@ DWRを利用することでHTTP/GETの形式でJavaのメソッドを呼ぶこ�
 * tomcatのbinディレクトリ内のstartup.batを実行->tomcatが起動し，multiple-dwr.warが配備（デプロイ）される．
 * 正常にtomcatが起動したのを確認後，「http://localhost:8080/multiple-dwr/index.html」にアクセス
 * 画面が正常にでて，maxに整数値，multipleに倍数の値を入れて，正常に実行できたらOK
+
+## jUnitでテストを行う。
+* 下記クラス（MultiplePrinterTest.java）を追加する
+ * https://github.com/ueyama-mst/multiple-dwr/tree/master/testcase/jp/ac/oit/igakilab/dwr/multiple
+* MultiplePrinterTest.javaを右クリック->実行->JUitテストを選択
+* 期待されないテスト結果が返ってきたものがエラーと表示される。
+
