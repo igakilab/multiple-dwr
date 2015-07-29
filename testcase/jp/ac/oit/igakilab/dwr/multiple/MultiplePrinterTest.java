@@ -39,6 +39,7 @@ public class MultiplePrinterTest {
 		assertSame(listExpected.size(),listCommon.size());
 	}
 
+	@SuppressWarnings("unused")
 	@Test(expected = InvalidValueException.class)
 	public void testExecute2() throws InvalidValueException {
 		MultiplePrinter mp = new MultiplePrinter();
