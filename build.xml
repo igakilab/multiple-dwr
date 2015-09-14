@@ -48,8 +48,8 @@
     <javac destdir="${dest.class.dir}"
            debug="on"
            includeantruntime="false"
-    	   source="1.7"
-    	   target="1.7"
+    	   source="1.8"
+    	   target="1.8"
            encoding="utf-8">
       <src path="${src.dir}" />
       <bootclasspath refid="boot.classpath" />
@@ -66,8 +66,8 @@
 		<javac destdir="${dest.test.dir}"
 	           debug="on"
 	           includeantruntime="false"
-	    	   source="1.7"
-	    	   target="1.7"
+	    	   source="1.8"
+	    	   target="1.8"
 	           encoding="utf-8">
 			<src path="${src.test.dir}" />
             <bootclasspath refid="boot.classpath" />
