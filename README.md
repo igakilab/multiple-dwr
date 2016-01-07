@@ -26,7 +26,7 @@
 DWRを利用することでHTTP/GETの形式でJavaのメソッドを呼ぶことができる．返り値はjsonになる．
 * multiple-dwrプロジェクトのsrcフォルダにパッケージを作成する（例：jp.ac.oit.igakilab.dwr.multiple）
 * 作成したパッケージ内にMultiplePrinterクラスを作成する．
-* MultiplePrinterクラス内に下記helloWorldメソッドを作成する
+* MultiplePrinterクラス内に下記helloWorldメソッドを作成する(helloWorldメソッド以外を作成するとコンパイルできないので注意すること）
  * https://github.com/igakilab/multiple-dwr/blob/master/src/jp/ac/oit/igakilab/dwr/multiple/MultiplePrinter.java#L81
 * multiple-dwrにWebContentフォルダを作成する．
  * WebContentフォルダ以下にWEB-INFフォルダを作成する．
@@ -88,8 +88,9 @@ DWRを利用することでHTTP/GETの形式でJavaのメソッドを呼ぶこ�
  * tomcatはver.7の利用を想定している．
 * tomcatのbinディレクトリ内のstartup.batを実行->tomcatが起動し，multiple-dwr.warが配備（デプロイ）される．
 * 正常にtomcatが起動したのを確認後，「http://localhost:8080/multiple-dwr/dwr/jsonp/MultiplePrinter/helloWorld/ryokun/」にアクセス
+ * JavaのhelloWorldメソッドに"ryokun"という文字列を引数で与えて呼び出している 
 * ブラウザに「{ "reply":"ryokun:HelloWorld"}」と表示されたら成功．
- * 404エラーなどが出る場合はC:\pleiades4.5\tomcat\7\webappsのmultiple-dwr.warを削除してみる
+ * 404エラーなどが出る場合はC:\pleiades4.5\tomcat\7\webappsのmultiple-dwr.warとmultiple-dwrフォルダを削除してant buildからやり直してみる
 
 
 ## JavaScriptからDWR(Direct Web Remoting)を利用してJavaのメソッドを呼ぶ方法
@@ -103,7 +104,7 @@ DWRを利用することでHTTP/GETの形式でJavaのメソッドを呼ぶこ�
  * JavaScriptからMultipleFormに入った値を受け取り，解釈して返すメソッド
 * dwr.xmlのallowタグの中（createタグの下）に，下記記述を追加する
  * 参考：https://github.com/igakilab/multiple-dwr/blob/master/WebContent/WEB-INF/dwr.xml
- * これは呼び出すメソッドの引数あるいは返り値に指定されたBeanをDWRに指定するための定義である
+ * これは呼び出すメソッドの引数あるいは返り値に指定されたBean（すべてのフィールドについてsetter/getterが定義されており，デフォルトコンストラクタが存在するJavaのクラス）をDWRに指定するための定義である
  * 同様に対象メソッドが例外を投げる場合はその例外を処理するための定義が下記のように必要
 ```
     <convert converter="bean" match="jp.ac.oit.igakilab.dwr.multiple.MultipleForm" />
@@ -117,11 +118,13 @@ DWRを利用することでHTTP/GETの形式でJavaのメソッドを呼ぶこ�
 * buildファイルのdeployタスクに従って，コンパイルしてwarファイルが作成され，tomcatのwebappsディレクトリに配置される．
 * tomcatのbinディレクトリ(C:\C:\pleiades4.5\tomcat\7\bin)内のstartup.batを実行->tomcatが起動し，multiple-dwr.warが配備（デプロイ）される．
 * 正常にtomcatが起動したのを確認後，「http://localhost:8080/multiple-dwr/index.html」にアクセス
-* 画面が正常にでて，maxに整数値，multipleに倍数の値を入れて，正常に実行できたらOK
+* 画面が正常にでて，maxと書いてあるテキストフィールドに整数値，multipleに倍数の値を入れて，正常に実行できたらOK
 
 ## jUnitでテストを行う。
-* 下記クラス（MultiplePrinterTest.java）を新規＞JUnitテストケースから追加する
- * https://github.com/ueyama-mst/multiple-dwr/tree/master/testcase/jp/ac/oit/igakilab/dwr/multiple
+* multiple-dwrのプロジェクトを右クリック->新規->ソースフォルダを選択し，フォルダー名をtestcaseにする．
+* testcaseフォルダを右クリック->新規->JUnitテストケースを選択する．
+* 作成されたJUnitテストケースファイルを開き，下記クラス（MultiplePrinterTest.java）を実装する
+ * https://github.com/igakilab/multiple-dwr/blob/master/testcase/jp/ac/oit/igakilab/dwr/multiple/MultiplePrinterTest.java
 * MultiplePrinterTest.javaを右クリック->実行->JUitテストを選択
 * 期待されないテスト結果が返ってきたものがエラーと表示される。
 
