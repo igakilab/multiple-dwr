@@ -1,10 +1,11 @@
 ﻿#multiple-dwr
 このリポジトリで学習できること
 
-1. DWRを利用してREST形式でJavaのメソッドを呼ぶ方法
+1. DWR(Direct Web Remoting)を利用してREST形式でJavaのメソッドを呼ぶ方法
+ * http://directwebremoting.org/dwr/index.html
 2. JavaScriptからDWR(Direct Web Remoting)を利用してJavaのメソッドを呼ぶ方法
 3. jUnitを用いた単体テストの作成
-4. antを用いたテスト・ビルドの方法
+4. antを用いたビルドやテストの実行方法
 
 本プロジェクトを一から作成する手順を示し，上記の解説を行う．
 
@@ -33,6 +34,7 @@ DWRを利用することでHTTP/GETの形式でJavaのメソッドを呼ぶこ�
  * WEB-INFフォルダ以下にlibフォルダを作成する
  * libに下記jarファイルを入れておく
  * https://github.com/igakilab/multiple-dwr/tree/master/WebContent/WEB-INF/lib
+  * DWRは3.0.1 ( http://directwebremoting.org/dwr/downloads/index.html ), commons-loggingは1.2を利用
  * WEB-INF以下にweb.xmlとdwr.xmlの2つのファイルを下記内容で作成する
  * web.xmlはdwrを利用するための設定(tomcat用)で，dwrの利用（デバッグモード付き）とREST呼び出しのための設定が記述されている．dwr.xmlはJavaのメソッドやオブジェクトをDWRに認識させるための設定になる．
   * 参考：https://github.com/igakilab/multiple-dwr/tree/master/WebContent/WEB-INF/
