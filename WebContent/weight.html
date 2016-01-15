@@ -1,41 +1,73 @@
 <html lang="ja">
-  <head>
-    <script type="text/javascript" src="dwr/engine.js"></script>
-    <script type="text/javascript" src="dwr/util.js"></script>
-    <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
-    <script type="text/javascript" src="js/jquery.serialize.js"></script>
-    <script type="text/javascript" src="dwr/interface/WeightTransition.js"></script>
-    <script type="text/javascript" src="http://www.google.com/jsapi"></script>
-    <script type="text/javascript">
-    $(function(){
-        WeightTransition.execute({
-          callback: function(data) {
-            /* valにArrayListの値が順番に入る．val.weightで体重，val.dateで日時を取得できる．
-            Monthは0からになっているので，1足す
-                         参考： http://tacamy.hatenablog.com/entry/2013/03/14/220831
-            */
-            $.each(data,function(index,val){
-            	$('#weightTransitionReply')
-            	.append(val.date.getMonth()+1 +"月"+val.date.getDate()+"日"+","+ val.weight+"</br>");
-            	console.log(val);
-            });
-            $('#error_message').text("");
-          },
-          errorHandler: updateErrorMessage
-        });
-      });
-      function updateErrorMessage(message, exception){
-        $('#error_message').text(message);
-        $('#csprinterReply').text("");
-      }
-    </script>
-  </head>
-  <body>
+<head>
+<script type="text/javascript" src="dwr/engine.js"></script>
+<script type="text/javascript" src="dwr/util.js"></script>
+<script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+<script type="text/javascript" src="js/jquery.serialize.js"></script>
+<script type="text/javascript" src="dwr/interface/WeightTransition.js"></script>
+<script type="text/javascript" src="http://www.google.com/jsapi"></script>
+<script type="text/javascript">
+	google.load("visualization", "1", {
+		packages : [ "corechart" ]
+	});
+	//google.setOnLoadCallback(draw);
+	function draw() {
+	}
+
+	$(function() {
+		WeightTransition.execute({
+			callback : function(data) {
+				/* valにArrayListの値が順番に入る．val.weightで体重，val.dateで日時を取得できる．
+				Monthは0からになっているので，1足す
+				             参考： http://tacamy.hatenablog.com/entry/2013/03/14/220831
+				 */
+				$.each(data, function(index, val) {
+					$('#weightTransitionReply').append(
+							val.date.getMonth() + 1 + "月" + val.date.getDate()
+									+ "日" + "," + val.weight + "</br>");
+					console.log(val);
+				});
+				$('#error_message').text("");
+
+				var data = google.visualization.arrayToDataTable([
+						[ '年月', '身長', '体重' ], [ '2011年', 173, 55 ],
+						[ '2012年', 175, 70 ], [ '2013年', 180, 68 ],
+						[ '2014年', 175, 67 ], [ '2015年', 173, 65 ] ]);
+
+				var options = {
+					title : '年別身長体重サンプル',
+					hAxis : {
+						title : '年月'
+					},
+					vAxis : {
+						title : 'cm/kg'
+					},
+					width : 500,
+					height : 250,
+					pointSize : 6
+				};
+
+				var chart = new google.visualization.LineChart(document
+						.getElementById('weightChart'));
+				chart.draw(data, options);
+
+			},
+			errorHandler : updateErrorMessage
+		});
+	});
+	function updateErrorMessage(message, exception) {
+		$('#error_message').text(message);
+		$('#csprinterReply').text("");
+	}
+</script>
+</head>
+<body>
 	<p>
-      Reply: <span id="weightTransitionReply"></span>
-    </p><p>
-      <span id="error_message" class="error"></span>
-    </p>
-    <div id="weightChart" style="width: 800px;"></div>
-  </body>
+		Reply: <span id="weightTransitionReply"></span>
+	</p>
+	<p>
+		<span id="error_message" class="error"></span>
+	</p>
+	<div id="weightChart" style="width: 800px;"></div>
+</body>
 </html>
