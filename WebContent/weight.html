@@ -11,6 +11,7 @@
 		packages : [ "corechart" ]
 	});
 
+	//jqueryの画面が表示されたときに呼ばれるメソッド
 	$(function() {
 		WeightTransition.execute({
 			callback : function(data) {
@@ -26,18 +27,25 @@
 				});
 				$('#error_message').text("");
 
-				var data = google.visualization.arrayToDataTable([
-						[ '年月', '身長', '体重' ], [ '2011年', 173, 55 ],
-						[ '2012年', 175, 70 ], [ '2013年', 180, 68 ],
-						[ '2014年', 175, 67 ], [ '2015年', 173, 65 ] ]);
+				//グラフ表示
+				//参考：http://qiita.com/tadsato/items/73eabb8c46244bcc4f5d
+				//http://www.itdashboard.go.jp/DataFeeds/sampleGc
+				var weightData = new google.visualization.DataTable();
+				weightData.addRows(6);
+				weightData.addColumn("string","年月");
+				weightData.addColumn("number","体重");
+				$.each(data, function(index, val) {
+					weightData.setValue(index,0,val.date.getMonth() + 1 + "月" + val.date.getDate()+ "日");
+					weightData.setValue(index,1,val.weight)
+				});
 
 				var options = {
-					title : '年別身長体重サンプル',
+					title : '体重推移',
 					hAxis : {
-						title : '年月'
+						title : '月日'
 					},
 					vAxis : {
-						title : 'cm/kg'
+						title : 'kg'
 					},
 					width : 500,
 					height : 250,
@@ -46,7 +54,7 @@
 
 				var chart = new google.visualization.LineChart(document
 						.getElementById('weightChart'));
-				chart.draw(data, options);
+				chart.draw(weightData, options);
 
 			},
 			errorHandler : updateErrorMessage
