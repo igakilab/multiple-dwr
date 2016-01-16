@@ -3,12 +3,13 @@ package jp.ac.oit.igakilab.dwr.multiple;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 public class WeightTransition {
 
 	//ToDo 引数をDateにして，そのDateから7日前の分ソートして取ってくる処理（データが無い日はDate以外のすべての値を0にする)
-	public ArrayList<WeightLog> execute(){
-		ArrayList<WeightLog> wlogOrig = this.makeTestData();
+	public List<WeightLog> execute(Date date){
+		List<WeightLog> wlogOrig = this.makeTestData();
 
 		return wlogOrig;
 	}
@@ -17,13 +18,13 @@ public class WeightTransition {
 	 * テストデータ作成用
 	 * @return
 	 */
-	private ArrayList<WeightLog> makeTestData(){
+	private List<WeightLog> makeTestData(){
 		Calendar cal = Calendar.getInstance();
 		cal.set(2015, 9,11);//2015/10/11
 		Date d = cal.getTime();
 		WeightLog w = new WeightLog(d,60,170.0);
 
-		ArrayList<WeightLog> wlog = new ArrayList<WeightLog>();
+		List<WeightLog> wlog = new ArrayList<WeightLog>();
 		wlog.add(w);
 
 		cal.set(2015, 9,12);//2015/10/12
