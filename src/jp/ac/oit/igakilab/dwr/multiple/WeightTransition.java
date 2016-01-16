@@ -9,8 +9,11 @@ public class WeightTransition {
 
 	//ToDo 引数をDateにして，そのDateから7日前の分ソートして取ってくる処理（データが無い日はDate以外のすべての値を0にする)
 	public List<WeightLog> execute(Date date){
-		System.out.println(date);
+
+		//全WeightLogの集合
 		List<WeightLog> wlogOrig = this.makeTestData();
+
+		//一週間分のログを取り出して保存する
 		List<WeightLog> weekWlog = new ArrayList<WeightLog>();
 
 		Calendar calInput = Calendar.getInstance();
@@ -19,7 +22,7 @@ public class WeightTransition {
 		//特定の日のデータが存在するかどうか
 		boolean existsData = false;
 
-		//dateから7日遡ってwlogOrigから値を取得する
+		//引数で与えられたdateから7日遡ってwlogOrigから値を取得する
 		for(int i=0;i<7;i++){
 			for(WeightLog w:wlogOrig){
 				if(this.compareDate(calInput.getTime(), w.getDate())){
@@ -29,6 +32,7 @@ public class WeightTransition {
 				}
 			}
 			//その日のデータが存在しなかった（一致するデータがwlogOrigに存在しなかった場合）
+			//空のデータを作成し，weekWlogに追加する
 			if(!existsData){
 				WeightLog w = new WeightLog(calInput.getTime(),0,0);
 				weekWlog.add(w);
@@ -40,15 +44,6 @@ public class WeightTransition {
 		//参考：http://ttlg.hateblo.jp/entry/2015/02/08/181600
 		weekWlog.sort((a,b)-> a.getDate().compareTo(b.getDate()));
 		return weekWlog;
-	}
-
-	/**
-	 * 特定の日が空いている場合に，空(0)のデータを保管するメソッド
-	 * 10/13のデータが無い場合に，10/13のデータを値0で作成し，保管する
-	 * @return
-	 */
-	private List<WeightLog> supplementWeekWeightLog(){
-		return null;
 	}
 
 	/**
