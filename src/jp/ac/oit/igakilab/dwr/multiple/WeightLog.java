@@ -9,13 +9,27 @@ import java.util.Date;
  */
 public class WeightLog {
 	private Date date;
-	private double weight;
+	private int weight;
+	private double height;
 
+	/**
+	 * デフォルトコンストラクタ
+	 * 引数付きコンストラクタがある場合は必須
+	 */
 	public WeightLog(){}
 
-	public WeightLog(Date d, double weight){
+	public WeightLog(Date d, int weight, double height){
 		this.date = d;
 		this.weight = weight;
+		this.height = height;
+	}
+
+	public double getHeight() {
+		return height;
+	}
+
+	public void setHeight(double height) {
+		this.height = height;
 	}
 
 	public Date getDate() {
@@ -27,7 +41,7 @@ public class WeightLog {
 	public double getWeight() {
 		return weight;
 	}
-	public void setWeight(double weight) {
+	public void setWeight(int weight) {
 		this.weight = weight;
 	}
 

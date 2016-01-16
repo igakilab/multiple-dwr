@@ -22,21 +22,24 @@
 				$.each(data, function(index, val) {
 					$('#weightTransitionReply').append(
 							val.date.getMonth() + 1 + "月" + val.date.getDate()
-									+ "日" + "," + val.weight + "</br>");
+									+ "日" + "," + val.weight + "," + val.height + "</br>");
 					console.log(val);
 				});
 				$('#error_message').text("");
 
 				//グラフ表示
+				//Todo: 値をもう一種類追加
 				//参考：http://qiita.com/tadsato/items/73eabb8c46244bcc4f5d
 				//http://www.itdashboard.go.jp/DataFeeds/sampleGc
 				var weightData = new google.visualization.DataTable();
 				weightData.addRows(6);
 				weightData.addColumn("string","年月");
 				weightData.addColumn("number","体重");
+				weightData.addColumn("number","身長");
 				$.each(data, function(index, val) {
 					weightData.setValue(index,0,val.date.getMonth() + 1 + "月" + val.date.getDate()+ "日");
 					weightData.setValue(index,1,val.weight)
+					weightData.setValue(index,2,val.height)
 				});
 
 				var options = {
