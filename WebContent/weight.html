@@ -1,0 +1,105 @@
+<html lang="ja">
+<head>
+<script type="text/javascript" src="dwr/engine.js"></script>
+<script type="text/javascript" src="dwr/util.js"></script>
+<script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+<script type="text/javascript" src="js/jquery.serialize.js"></script>
+<script type="text/javascript" src="dwr/interface/WeightTransition.js"></script>
+<script type="text/javascript" src="http://www.google.com/jsapi"></script>
+<script type="text/javascript">
+	google.load("visualization", "1", {
+		packages : [ "corechart" ]
+	});
+
+	//jqueryの画面が表示されたときに呼ばれるメソッド
+	$(function() {
+		var year = getUrlVars()['y'];
+		var month = getUrlVars()['m']-1;//monthは0から数えられるため，1減らしておく
+		var day = getUrlVars()['d'];
+		//http://..../weight.html?y=2015&m=10&d=19 のように指定する
+		if(isNaN(Number(year))||isNaN(Number(month))||isNaN(Number(day))){
+			year=2015;
+			month=9;
+			day=19;
+		}
+
+		var wDate = new Date(year,month,day);
+		WeightTransition.execute(wDate,{
+			callback : function(data) {
+				/* valにArrayListの値が順番に入る．val.weightで体重，val.dateで日時を取得できる．
+				Monthは0からになっているので，1足す
+				 参考： http://tacamy.hatenablog.com/entry/2013/03/14/220831
+				 */
+				$.each(data, function(index, val) {
+					$('#weightTransitionReply').append(
+							val.date.getMonth() + 1 + "月" + val.date.getDate()
+									+ "日" + "," + val.weight + "," + val.height + "</br>");
+					console.log(val);
+				});
+				$('#error_message').text("");
+
+				//グラフ表示
+				//参考：http://qiita.com/tadsato/items/73eabb8c46244bcc4f5d
+				//http://www.itdashboard.go.jp/DataFeeds/sampleGc
+				var weightData = new google.visualization.DataTable();
+				weightData.addRows(7);
+				weightData.addColumn("string","年月");
+				weightData.addColumn("number","体重");
+				weightData.addColumn("number","身長");
+				$.each(data, function(index, val) {
+					weightData.setValue(index,0,val.date.getMonth() + 1 + "月" + val.date.getDate()+ "日");
+					weightData.setValue(index,1,val.weight)
+					weightData.setValue(index,2,val.height)
+				});
+
+				var options = {
+					title : '身長体重推移',
+					hAxis : {
+						title : '月日'
+					},
+					vAxis : {
+						title : 'kg:cm'
+					},
+					width : 500,
+					height : 250,
+					pointSize : 6
+				};
+
+				var chart = new google.visualization.LineChart(document
+						.getElementById('weightChart'));
+				chart.draw(weightData, options);
+
+			},
+			errorHandler : updateErrorMessage
+		});
+	});
+	function updateErrorMessage(message, exception) {
+		$('#error_message').text(message);
+		$('#csprinterReply').text("");
+	}
+
+	//URL末尾にオプションが指定された場合に，それを取得するfunction
+	//下記の場合に，a,bの値が入ったvarsを返す
+	//http://.../hoge.html?a=1&b=2
+	function getUrlVars() {
+		var vars = new Object;
+		var params = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+		for(var i in params) {
+			var h = params[i].split('=');
+			vars[h[0]] = h[1];
+		}
+		return vars;
+	}
+
+</script>
+</head>
+<body>
+	<p>
+		Reply: <span id="weightTransitionReply"></span>
+	</p>
+	<p>
+		<span id="error_message" class="error"></span>
+	</p>
+	<div id="weightChart" style="width: 800px;"></div>
+</body>
+</html>
