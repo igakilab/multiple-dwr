@@ -13,7 +13,17 @@
 
 	//jqueryの画面が表示されたときに呼ばれるメソッド
 	$(function() {
-		var wDate = new Date(2015,9,20);
+		var year = getUrlVars()['y'];
+		var month = getUrlVars()['m']-1;//monthは0から数えられるため，1減らしておく
+		var day = getUrlVars()['d'];
+		//http://..../weight.html?y=2015&m=10&d=19 のように指定する
+		if(isNaN(Number(year))||isNaN(Number(month))||isNaN(Number(day))){
+			year=2015;
+			month=9;
+			day=19;
+		}
+
+		var wDate = new Date(year,month,day);
 		WeightTransition.execute(wDate,{
 			callback : function(data) {
 				/* valにArrayListの値が順番に入る．val.weightで体重，val.dateで日時を取得できる．
@@ -67,6 +77,20 @@
 		$('#error_message').text(message);
 		$('#csprinterReply').text("");
 	}
+
+	//URL末尾にオプションが指定された場合に，それを取得するfunction
+	//下記の場合に，a,bの値が入ったvarsを返す
+	//http://.../hoge.html?a=1&b=2
+	function getUrlVars() {
+		var vars = new Object;
+		var params = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+		for(var i in params) {
+			var h = params[i].split('=');
+			vars[h[0]] = h[1];
+		}
+		return vars;
+	}
+
 </script>
 </head>
 <body>
