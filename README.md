@@ -140,7 +140,7 @@ DWRを利用することでHTTP/GETの形式でJavaのメソッドを呼ぶこ�
  - WeightTransition.java
  - weight.html
 * URLの引数（クエリパラメータ）を利用する方法
- - http://.../weight.html?y=2015&m=10&d=20 として呼び出すと，`2015/10/20` がDate型としてJavaメソッド(WeightTransition.execute())に渡される
+ - http://.../weight.html?y=2015&m=10&d=20 として呼び出すと，`2015/10/20` がDate型としてJavaメソッド(WeightTransition.execute())に渡され，10/20からその日を含んで7日間の過去の身長・体重データを取得できる
 * Date型の引数を利用してJavaのメソッドを呼び出す方法
  - DWRではデフォルトとしてDate型を扱える
 * ArrayListのsortをラムダ式で行う方法
