@@ -13,7 +13,8 @@
 
 	//jqueryの画面が表示されたときに呼ばれるメソッド
 	$(function() {
-		WeightTransition.execute({
+		var wDate = new Date(2015,9,20);
+		WeightTransition.execute(wDate,{
 			callback : function(data) {
 				/* valにArrayListの値が順番に入る．val.weightで体重，val.dateで日時を取得できる．
 				Monthは0からになっているので，1足す
@@ -28,11 +29,10 @@
 				$('#error_message').text("");
 
 				//グラフ表示
-				//Todo: 値をもう一種類追加
 				//参考：http://qiita.com/tadsato/items/73eabb8c46244bcc4f5d
 				//http://www.itdashboard.go.jp/DataFeeds/sampleGc
 				var weightData = new google.visualization.DataTable();
-				weightData.addRows(6);
+				weightData.addRows(7);
 				weightData.addColumn("string","年月");
 				weightData.addColumn("number","体重");
 				weightData.addColumn("number","身長");
@@ -43,12 +43,12 @@
 				});
 
 				var options = {
-					title : '体重推移',
+					title : '身長体重推移',
 					hAxis : {
 						title : '月日'
 					},
 					vAxis : {
-						title : 'kg'
+						title : 'kg:cm'
 					},
 					width : 500,
 					height : 250,
