@@ -150,8 +150,7 @@ DWRを利用することでHTTP/GETの形式でJavaのメソッドを呼ぶこ�
  - `weekWlog.sort((a,b)-> a.getDate().compareTo(b.getDate()));`
 
 ## PostgresqlとMybatisを使ってDBを利用するWebアプリケーションを開発してみる
-### 準備
-* Database
+### 準備(Database)
  - DBはなんでも良い．たまたまPortable版（インストール作業がファイル解凍だけで環境を汚さない）のPostgreSQLが見つかったので今回はそれを選択した．以下よりzipをDLして好きなところに解凍すればインストールはOK．動かすときはPostgreSQLPortable.exeを実行すれば良い．
    - https://github.com/garethflowers/postgresql-portable/releases
    - 今回はPostgreSQLPortable_9.6.1を利用
@@ -159,7 +158,10 @@ DWRを利用することでHTTP/GETの形式でJavaのメソッドを呼ぶこ�
       - 参考：http://kenpg2.seesaa.net/article/415046025.html
    - デフォルトでは，ポート：5432，ユーザ名：postgres，DB名：postgres，で自動的に起動する．
       - 参考：https://kenpg.bitbucket.io/blog/201505/02.html
-   - Webアプリケーションのために以下のコマンドをPostgreSQLPortableのコンソールに順に入力する
-
+   - Webアプリケーションのために以下のコマンドをPostgreSQLPortableのコンソールに順に入力する．
+      - `postgres=#`はコンソールに最初から表示されている
+```SQL
+postgres=# create database product;
+```
 * OR Mapper (MyBatis)
  -
