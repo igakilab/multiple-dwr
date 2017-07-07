@@ -3,7 +3,7 @@
 このリポジトリで学習できること
 
 1. DWR(Direct Web Remoting)を利用してREST形式でJavaのメソッドを呼ぶ方法
- * http://directwebremoting.org/dwr/index.html
+   * http://directwebremoting.org/dwr/index.html
 2. JavaScriptからDWR(Direct Web Remoting)を利用してJavaのメソッドを呼ぶ方法
 3. jUnitを用いた単体テストの作成
 4. antを用いたビルドやテストの実行方法
@@ -11,6 +11,7 @@
  * URLの引数（クエリパラメータ）を利用する方法
  * Date型の引数を利用してJavaのメソッドを呼び出す方法
  * ArrayListのsortをラムダ式で行う方法
+6. PostgresqlとMybatisを使ってDBを利用するWebアプリケーションを開発してみる
 
 本プロジェクトを一から作成する手順を示し，上記の解説を行う．
 
@@ -181,28 +182,39 @@ insert into food (name, price) VALUES ('peach', 200);
   - 利用するのがJava8なので，「PostgreSQL JDBC 4.2 Driver, 42.1.1 (postgresql-42.1.1.jar)」をダウンロードする．
   - mybatisライブラリと同じくWebContent\WEB-INF\libの中に↑のjarを置き，eclipse上で右クリック->ビルドパス->ビルドパスに追加，をクリックする．
 - eclipseプロジェクトにresourcesというフォルダを追加し，右クリック->ビルドパス->ソースフォルダーとして使用，をクリックする
-  - mybatis-config.xmlとproduct_mapper.xmlという2つのファイルを新規に作成する
-    - xmlファイルの中身
-    - mybatis-config.xml は接続先DBの設定やmapper.xmlの指定を行っている
-    - product_mapper.xml は↑で作成したproductデータベースのfoodテーブル内の要素をselectするsqlが指定されている
+  - mybatis-config.xmlとproduct_mapper.xmlという以下の2つのファイルを新規に作成する
+    - https://github.com/igakilab/multiple-dwr/tree/master/resources
+    - mybatis-config.xml は接続先DBの設定やmapper.xmlの指定を行っている
+    - product_mapper.xml は↑で作成したproductデータベースのfoodテーブル内の要素をselectするsqlが指定されている
 - jp.ac.oit.igakilab.dwr.mybatisというパッケージを追加する
-  - ↑のパッケージ内に，DBUtility.javaを作成する
-    - DBUtility.java
-    - Mybatisを介してDBにアクセスするための処理
+  - ↑のパッケージ内に，DBUtility.javaを作成する
+    - https://github.com/igakilab/multiple-dwr/blob/master/src/jp/ac/oit/igakilab/dwr/mybatis/DBUtility.java
+    - Mybatisを介してDBにアクセスするための処理が書かれている（どんなプログラムでも再利用可能）
 
 ### 準備(Javaプロジェクト)
 - build.xmlを以下のように修正する．
-  - xmlファイルのリンク
-  - 修正箇所は12行目辺りに`<property name="src.res.dir" value="resources" />`を追加したところと60行目あたりのtarget name="compile"のところに下記を追加したところ．
+  - https://github.com/igakilab/multiple-dwr/blob/master/build.xml
+  - 修正箇所は12行目辺りに`<property name="src.res.dir" value="resources" />`を追加したところと`<target name="compile" depends="prepare">`タグ内の60行目辺りに下記を追加したところ．
 
 ```xml
 	<copy todir="${dest.class.dir}">
 		<fileset dir="${src.res.dir}" />
 	</copy>
 ```
+
+- ここまではどんなWebアプリケーションでも同じ(product_mapper.xmlやDBの内容登録等は除く)であるため，再利用可能．以下がアプリによって異なるところ．
+### postgresqlにアクセスするWebアプリケーションの実装
+- 下記のファイルを指定されたパッケージに追加する
+  - jp.ac.oit.igakilab.dwr.mybatis.Food.java
+    - https://github.com/igakilab/multiple-dwr/blob/master/src/jp/ac/oit/igakilab/dwr/mybatis/Food.java
+    - productsデータベースのfoodテーブルの中身を保存するBeanクラス
+  - jp.ac.oit.igakilab.dwr.mybatis.ProductPrinter.java
+    - https://github.com/igakilab/multiple-dwr/blob/master/src/jp/ac/oit/igakilab/dwr/mybatis/ProductPrinter.java
+    - Webアプリケーションとして公開するメソッドを実装したクラス（テスト用にmainメソッドも実装している）
+
 - dwr.xml (WebContent/WEB-INF/内）の修正
-  - dwrへのリンク
-  - 修正箇所は`<dwr><allow>`タグ内に下記を追加したところ．
+  - https://github.com/igakilab/multiple-dwr/blob/master/WebContent/WEB-INF/dwr.xml
+  - 修正箇所は`<dwr><allow>`タグ内に下記を追加したところ．
 
 ```xml
     <create creator="new" javascript="ProductPrinter">
@@ -211,6 +223,40 @@ insert into food (name, price) VALUES ('peach', 200);
     <convert converter="bean" match="jp.ac.oit.igakilab.dwr.mybatis.*" />
 ```
 
-- 下記のファイルで実現されている
-  - jp.ac.oit.igakilab.dwr.mybatis.Food.java
-  - jp.ac.oit.igakilab.dwr.mybatis.ProductPrinter.java
+### 確認
+- PostgreSQLが実行されていることを確認する
+- jp.ac.oit.igakilab.dwr.mybatis.ProductPrinterを右クリックし，実行->Javaアプリケーション，をクリックする．mainメソッドが実装されているので，mybatisやpostgresqlの設定がうまくいっていれば，下記がコンソールに表示される．
+
+```
+apple
+120
+melon
+500
+peach
+200
+```
+
+- これが表示されなければ，mybatisのconfigかDBUtility.java，ProductPrinterクラスなどが何か間違っている(まだDWRとは無関係)．
+- ↑が正常に表示されることを確認後，Webアプリケーションを動かしてみる．
+- build.xmlを右クリックし，実行->Ant Build(2つ並んでるもののうえのほう）を選択
+- buildファイルのdeployタスクに従って，コンパイルしてwarファイルが作成され，tomcatのwebappsディレクトリに配置される．
+- tomcatのbinディレクトリ(C:\C:\pleiades\tomcat\8\bin)内のstartup.batを実行->tomcatが起動し，multiple-dwr.warが配備（デプロイ）される．
+- 正常にtomcatが起動したのを確認後，「http://localhost:8080/multiple-dwr/dwr/jsonp/ProductPrinter/execute/」にアクセス．
+- apple,melon等のproduct DBのfoodテーブルに登録した情報が下記のようにJSON形式で表示されていればOK
+
+```json
+[
+  {
+    "name": "apple",
+    "price": 120
+  },
+  {
+    "name": "melon",
+    "price": 500
+  },
+  {
+    "name": "peach",
+    "price": 200
+  }
+]
+```
