@@ -1,4 +1,5 @@
-#multiple-dwr
+# multiple-dwr
+
 このリポジトリで学習できること
 
 1. DWR(Direct Web Remoting)を利用してREST形式でJavaのメソッドを呼ぶ方法
@@ -13,7 +14,7 @@
 
 本プロジェクトを一から作成する手順を示し，上記の解説を行う．
 
-##準備
+## 準備
 * mergedocからeclipse Pleiades All in One 4.5 Java 64bit Full Editionをダウンロードし，下記ディレクトリ構成になるように展開する(ant buildとtomcatの利用方法説明の関係)．
   * c:\pleiades\eclipse, java, tomcat
     * 任意のバージョンにするため，peiadesのバージョン番号をフォルダ名から削除
@@ -45,7 +46,7 @@ DWRを利用することでHTTP/GETの形式でJavaのメソッドを呼ぶこ�
   * 参考：https://github.com/igakilab/multiple-dwr/tree/master/WebContent/WEB-INF/
 
 #### web.xml
-```
+```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE web-app
     PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
@@ -73,7 +74,7 @@ DWRを利用することでHTTP/GETの形式でJavaのメソッドを呼ぶこ�
 ```
 
 #### dwr.xml
-```
+```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE dwr PUBLIC
     "-//GetAhead Limited//DTD Direct Web Remoting 3.0//EN"
@@ -158,7 +159,9 @@ DWRを利用することでHTTP/GETの形式でJavaのメソッドを呼ぶこ�
       - 参考：http://kenpg2.seesaa.net/article/415046025.html
    - デフォルトでは，ポート：5432，ユーザ名：postgres，DB名：postgres，で自動的に起動する．
       - 参考：https://kenpg.bitbucket.io/blog/201505/02.html
+   - デフォルトでは，ポート：5432，ユーザ名：postgres，DB名：postgres，で自動的に起動する．
    - Webアプリケーションのために以下のコマンドをPostgreSQLPortableのコンソールに一行ずつ順に入力する．なお，以下のコマンドはコンソールに表示されている`postgres=#`に続けて入力することを想定している(`postgres=#`は接続するDBを変更するとそのDB名に変わる)．
+
 ```sql
 create database product; -- productという名前のDBを作成する．DBの一覧は「\l」と打つことで確認できる．
 \c product -- productという名前のDBに接続する．
@@ -167,5 +170,15 @@ insert into food (name, price) VALUES ('apple', 120); -- 各データをfoodテ�
 insert into food (name, price) VALUES ('melon', 500); -- 「select * from food;」と実行すると追加されたデータを確認できる．
 insert into food (name, price) VALUES ('peach', 200);
 ```
-* OR Mapper (MyBatis)
- -
+
+### 準備（OR Mapper (MyBatis)）
+- OR Mapper: DBとJavaのクラスの間を仲介するライブラリのこと．今回はMyBatis（ http://www.mybatis.org/mybatis-3/ja/ ) を利用する．
+- mybatisライブラリを下記からダウンロード（今回はmybatis-3.4.4.zip をダウンロード）
+  - https://github.com/mybatis/mybatis-3/releases
+  - WebContent\WEB-INF\libの中に，↑のzipを解凍するとでてくる「mybatis-3.4.4.jar」を置く．
+  - mybatis-3.4.4.jarをeclipse上で右クリック->ビルドパス->ビルドパスに追加，をクリックする．
+- PostgreSQLを利用するためのJDBCドライバを下記からダウンロードする．なお，利用するDBがPostgreSQLではない場合，対応するDBのJDBCをドライバをDLして同じようにすれば良い．
+  - https://jdbc.postgresql.org/download.html
+  - 利用するのがJava8なので，「PostgreSQL JDBC 4.2 Driver, 42.1.1 (postgresql-42.1.1.jar)」をダウンロードする．
+  - mybatisライブラリと同じくWebContent\WEB-INF\libの中に↑のjarを置き，eclipse上で右クリック->ビルドパス->ビルドパスに追加，をクリックする．
+  
