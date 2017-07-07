@@ -180,5 +180,37 @@ insert into food (name, price) VALUES ('peach', 200);
   - https://jdbc.postgresql.org/download.html
   - 利用するのがJava8なので，「PostgreSQL JDBC 4.2 Driver, 42.1.1 (postgresql-42.1.1.jar)」をダウンロードする．
   - mybatisライブラリと同じくWebContent\WEB-INF\libの中に↑のjarを置き，eclipse上で右クリック->ビルドパス->ビルドパスに追加，をクリックする．
-  
-### DBの値を表示するWebアプリケーションを作成する
+- eclipseプロジェクトにresourcesというフォルダを追加し，右クリック->ビルドパス->ソースフォルダーとして使用，をクリックする
+  - mybatis-config.xmlとproduct_mapper.xmlという2つのファイルを新規に作成する
+    - xmlファイルの中身
+    - mybatis-config.xml は接続先DBの設定やmapper.xmlの指定を行っている
+    - product_mapper.xml は↑で作成したproductデータベースのfoodテーブル内の要素をselectするsqlが指定されている
+- jp.ac.oit.igakilab.dwr.mybatisというパッケージを追加する
+  - ↑のパッケージ内に，DBUtility.javaを作成する
+    - DBUtility.java
+    - Mybatisを介してDBにアクセスするための処理
+
+### 準備(Javaプロジェクト)
+- build.xmlを以下のように修正する．
+  - xmlファイルのリンク
+  - 修正箇所は12行目辺りに`<property name="src.res.dir" value="resources" />`を追加したところと60行目あたりのtarget name="compile"のところに下記を追加したところ．
+
+```xml
+	<copy todir="${dest.class.dir}">
+		<fileset dir="${src.res.dir}" />
+	</copy>
+```
+- dwr.xml (WebContent/WEB-INF/内）の修正
+  - dwrへのリンク
+  - 修正箇所は`<dwr><allow>`タグ内に下記を追加したところ．
+
+```xml
+    <create creator="new" javascript="ProductPrinter">
+      <param name="class" value="jp.ac.oit.igakilab.dwr.mybatis.ProductPrinter"/>
+    </create>
+    <convert converter="bean" match="jp.ac.oit.igakilab.dwr.mybatis.*" />
+```
+
+- 下記のファイルで実現されている
+  - jp.ac.oit.igakilab.dwr.mybatis.Food.java
+  - jp.ac.oit.igakilab.dwr.mybatis.ProductPrinter.java
