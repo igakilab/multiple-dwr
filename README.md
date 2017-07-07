@@ -1,4 +1,4 @@
-﻿#multiple-dwr
+#multiple-dwr
 このリポジトリで学習できること
 
 1. DWR(Direct Web Remoting)を利用してREST形式でJavaのメソッドを呼ぶ方法
@@ -158,10 +158,14 @@ DWRを利用することでHTTP/GETの形式でJavaのメソッドを呼ぶこ�
       - 参考：http://kenpg2.seesaa.net/article/415046025.html
    - デフォルトでは，ポート：5432，ユーザ名：postgres，DB名：postgres，で自動的に起動する．
       - 参考：https://kenpg.bitbucket.io/blog/201505/02.html
-   - Webアプリケーションのために以下のコマンドをPostgreSQLPortableのコンソールに順に入力する．
-      - `postgres=#`はコンソールに最初から表示されている
-```SQL
-postgres=# create database product;
+   - Webアプリケーションのために以下のコマンドをPostgreSQLPortableのコンソールに一行ずつ順に入力する．なお，以下のコマンドはコンソールに表示されている`postgres=#`に続けて入力することを想定している(`postgres=#`は接続するDBを変更するとそのDB名に変わる)．
+```sql
+create database product; -- productという名前のDBを作成する．DBの一覧は「\l」と打つことで確認できる．
+\c product -- productという名前のDBに接続する．
+create table food(name varchar(10), price int); -- food tableを作成する．「\z」でテーブルの一覧が，「\d tablename」でtablenameで指定したテーブルのスキーマが表示される．
+insert into food (name, price) VALUES ('apple', 120); -- 各データをfoodテーブルに追加．
+insert into food (name, price) VALUES ('melon', 500); -- 「select * from food;」と実行すると追加されたデータを確認できる．
+insert into food (name, price) VALUES ('peach', 200);
 ```
 * OR Mapper (MyBatis)
  -
