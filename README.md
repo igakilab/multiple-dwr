@@ -181,3 +181,4 @@ insert into food (name, price) VALUES ('peach', 200);
   - 利用するのがJava8なので，「PostgreSQL JDBC 4.2 Driver, 42.1.1 (postgresql-42.1.1.jar)」をダウンロードする．
   - mybatisライブラリと同じくWebContent\WEB-INF\libの中に↑のjarを置き，eclipse上で右クリック->ビルドパス->ビルドパスに追加，をクリックする．
   
+### DBの値を表示するWebアプリケーションを作成する
