@@ -9,7 +9,8 @@
   <property name="src.dir" value="src" />
   <property name="src.web.dir" value="WebContent" />
   <property name="src.test.dir" value="testcase" />
-
+  <property name="src.res.dir" value="resources" />
+	
   <property name="dest.dir" value="dest" />
   <property name="dest.class.dir" value="${dest.dir}/classes" />
 
@@ -55,6 +56,9 @@
       <bootclasspath refid="boot.classpath" />
       <classpath refid="base.classpath" />
     </javac>
+	<copy todir="${dest.class.dir}">
+		<fileset dir="${src.res.dir}" />
+	</copy>
   </target>
 
   <target name="compile-test" depends="compile">

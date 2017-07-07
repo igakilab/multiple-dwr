@@ -1,4 +1,5 @@
-﻿#multiple-dwr
+# multiple-dwr
+
 このリポジトリで学習できること
 
 1. DWR(Direct Web Remoting)を利用してREST形式でJavaのメソッドを呼ぶ方法
@@ -13,7 +14,7 @@
 
 本プロジェクトを一から作成する手順を示し，上記の解説を行う．
 
-##準備
+## 準備
 * mergedocからeclipse Pleiades All in One 4.5 Java 64bit Full Editionをダウンロードし，下記ディレクトリ構成になるように展開する(ant buildとtomcatの利用方法説明の関係)．
   * c:\pleiades\eclipse, java, tomcat
     * 任意のバージョンにするため，peiadesのバージョン番号をフォルダ名から削除
@@ -45,7 +46,7 @@ DWRを利用することでHTTP/GETの形式でJavaのメソッドを呼ぶこ�
   * 参考：https://github.com/igakilab/multiple-dwr/tree/master/WebContent/WEB-INF/
 
 #### web.xml
-```
+```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE web-app
     PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
@@ -73,7 +74,7 @@ DWRを利用することでHTTP/GETの形式でJavaのメソッドを呼ぶこ�
 ```
 
 #### dwr.xml
-```
+```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE dwr PUBLIC
     "-//GetAhead Limited//DTD Direct Web Remoting 3.0//EN"
@@ -148,3 +149,68 @@ DWRを利用することでHTTP/GETの形式でJavaのメソッドを呼ぶこ�
 * ArrayListのsortをラムダ式で行う方法
  - WeightTransition.execute() 内で実装
  - `weekWlog.sort((a,b)-> a.getDate().compareTo(b.getDate()));`
+
+## PostgresqlとMybatisを使ってDBを利用するWebアプリケーションを開発してみる
+### 準備(Database)
+ - DBはなんでも良い．たまたまPortable版（インストール作業がファイル解凍だけで環境を汚さない）のPostgreSQLが見つかったので今回はそれを選択した．以下よりzipをDLして好きなところに解凍すればインストールはOK．動かすときはPostgreSQLPortable.exeを実行すれば良い．
+   - https://github.com/garethflowers/postgresql-portable/releases
+   - 今回はPostgreSQLPortable_9.6.1を利用
+   - PostgreSQLPortable.exeを起動すると，「Warning: Console code page (1252) differs..」という警告がでるので，一度「\q」と打って終了し，以下のページに従って「PostgreSQLPortable_9.6.1\App\PgSQL」にあるpgsql.cmdの6行目あたりにある「chcp 1252 > null」という行を「chcp 932 > null」に変更してから，もう一度PostgreSQLPortable.exeを実行する．
+      - 参考：http://kenpg2.seesaa.net/article/415046025.html
+   - デフォルトでは，ポート：5432，ユーザ名：postgres，DB名：postgres，で自動的に起動する．
+      - 参考：https://kenpg.bitbucket.io/blog/201505/02.html
+   - Webアプリケーションのために以下のコマンドをPostgreSQLPortableのコンソールに一行ずつ順に入力する．なお，以下のコマンドはコンソールに表示されている`postgres=#`に続けて入力することを想定している(`postgres=#`は接続するDBを変更するとそのDB名に変わる)．
+
+```sql
+create database product; -- productという名前のDBを作成する．DBの一覧は「\l」と打つことで確認できる．
+\c product -- productという名前のDBに接続する．
+create table food(name varchar(10), price int); -- food tableを作成する．「\z」でテーブルの一覧が，「\d tablename」でtablenameで指定したテーブルのスキーマが表示される．
+insert into food (name, price) VALUES ('apple', 120); -- 各データをfoodテーブルに追加．
+insert into food (name, price) VALUES ('melon', 500); -- 「select * from food;」と実行すると追加されたデータを確認できる．
+insert into food (name, price) VALUES ('peach', 200);
+```
+
+### 準備（OR Mapper (MyBatis)）
+- OR Mapper: DBとJavaのクラスの間を仲介するライブラリのこと．今回はMyBatis（ http://www.mybatis.org/mybatis-3/ja/ ) を利用する．
+- mybatisライブラリを下記からダウンロード（今回はmybatis-3.4.4.zip をダウンロード）
+  - https://github.com/mybatis/mybatis-3/releases
+  - WebContent\WEB-INF\libの中に，↑のzipを解凍するとでてくる「mybatis-3.4.4.jar」を置く．
+  - mybatis-3.4.4.jarをeclipse上で右クリック->ビルドパス->ビルドパスに追加，をクリックする．
+- PostgreSQLを利用するためのJDBCドライバを下記からダウンロードする．なお，利用するDBがPostgreSQLではない場合，対応するDBのJDBCをドライバをDLして同じようにすれば良い．
+  - https://jdbc.postgresql.org/download.html
+  - 利用するのがJava8なので，「PostgreSQL JDBC 4.2 Driver, 42.1.1 (postgresql-42.1.1.jar)」をダウンロードする．
+  - mybatisライブラリと同じくWebContent\WEB-INF\libの中に↑のjarを置き，eclipse上で右クリック->ビルドパス->ビルドパスに追加，をクリックする．
+- eclipseプロジェクトにresourcesというフォルダを追加し，右クリック->ビルドパス->ソースフォルダーとして使用，をクリックする
+  - mybatis-config.xmlとproduct_mapper.xmlという2つのファイルを新規に作成する
+    - xmlファイルの中身
+    - mybatis-config.xml は接続先DBの設定やmapper.xmlの指定を行っている
+    - product_mapper.xml は↑で作成したproductデータベースのfoodテーブル内の要素をselectするsqlが指定されている
+- jp.ac.oit.igakilab.dwr.mybatisというパッケージを追加する
+  - ↑のパッケージ内に，DBUtility.javaを作成する
+    - DBUtility.java
+    - Mybatisを介してDBにアクセスするための処理
+
+### 準備(Javaプロジェクト)
+- build.xmlを以下のように修正する．
+  - xmlファイルのリンク
+  - 修正箇所は12行目辺りに`<property name="src.res.dir" value="resources" />`を追加したところと60行目あたりのtarget name="compile"のところに下記を追加したところ．
+
+```xml
+	<copy todir="${dest.class.dir}">
+		<fileset dir="${src.res.dir}" />
+	</copy>
+```
+- dwr.xml (WebContent/WEB-INF/内）の修正
+  - dwrへのリンク
+  - 修正箇所は`<dwr><allow>`タグ内に下記を追加したところ．
+
+```xml
+    <create creator="new" javascript="ProductPrinter">
+      <param name="class" value="jp.ac.oit.igakilab.dwr.mybatis.ProductPrinter"/>
+    </create>
+    <convert converter="bean" match="jp.ac.oit.igakilab.dwr.mybatis.*" />
+```
+
+- 下記のファイルで実現されている
+  - jp.ac.oit.igakilab.dwr.mybatis.Food.java
+  - jp.ac.oit.igakilab.dwr.mybatis.ProductPrinter.java
