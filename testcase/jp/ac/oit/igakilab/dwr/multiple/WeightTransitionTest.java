@@ -19,7 +19,7 @@ public class WeightTransitionTest {
 		for(WeightLog w:wlog){
 			System.out.println(w.getDate());
 		}
-		assertSame(wlog.size(),1);
+		assertSame(wlog.size(),7);
 	}
 
 }

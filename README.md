@@ -15,11 +15,12 @@
 
 ##準備
 * mergedocからeclipse Pleiades All in One 4.5 Java 64bit Full Editionをダウンロードし，下記ディレクトリ構成になるように展開する(ant buildとtomcatの利用方法説明の関係)．
-  * c:\pleiades4.5\eclipse, java, tomcat
+  * c:\pleiades\eclipse, java, tomcat
+    * 任意のバージョンにするため，peiadesのバージョン番号をフォルダ名から削除
 * Windowsの環境変数設定
   * コンピュータを右クリック->プロパティ(あるいはコントロールパネルの「システム」）->システムの詳細設定->環境変数
-  * 環境変数でユーザ/システム環境変数のどちらかに，変数名：JAVA_HOME，変数値：C:\pleiades4.5\java\8 (要はJDKのbinがあるディレクトリの一つ上）を指定する
-同じく変数名：JRE_HOME, 変数値：C:\pleiades4.5\java\8\jre (JREのbinがあるディレクトリの一つ上)を指定する．
+  * 環境変数でユーザ/システム環境変数のどちらかに，変数名：JAVA_HOME，変数値：C:\pleiades\java\8 (要はJDKのbinがあるディレクトリの一つ上）を指定する
+同じく変数名：JRE_HOME, 変数値：C:\pleiades\java\8\jre (JREのbinがあるディレクトリの一つ上)を指定する．
 * eclipseの設定
   * JDK1.8を明示的に下記のように指定する．
     * ウィンドウ->設定->コンパイラー->コンパイラー準拠レベルを1.8に変更．下の方にインストール済みJREが．．とか警告がでるので，そこでもJRE8を選択する．フルビルドはしてもしなくても良い．
@@ -38,7 +39,7 @@ DWRを利用することでHTTP/GETの形式でJavaのメソッドを呼ぶこ�
  * WEB-INFフォルダ以下にlibフォルダを作成する
  * libに下記jarファイルを入れておく
  * https://github.com/igakilab/multiple-dwr/tree/master/WebContent/WEB-INF/lib
-  * DWRは3.0.1 ( http://directwebremoting.org/dwr/downloads/index.html ), commons-loggingは1.2を利用
+  * DWRは3.0.2 ( http://directwebremoting.org/dwr/downloads/index.html ), commons-loggingは1.2を利用
  * WEB-INF以下にweb.xmlとdwr.xmlの2つのファイルを下記内容で作成する
  * web.xmlはdwrを利用するための設定(tomcat用)で，dwrの利用（デバッグモード付き）とREST呼び出しのための設定が記述されている．dwr.xmlはJavaのメソッドやオブジェクトをDWRに認識させるための設定になる．
   * 参考：https://github.com/igakilab/multiple-dwr/tree/master/WebContent/WEB-INF/
@@ -91,12 +92,12 @@ DWRを利用することでHTTP/GETの形式でJavaのメソッドを呼ぶこ�
 * build-windows.xmlにはtomcatとjreのホームディレクトリが絶対パスで指定されている．自分のディレクトリ構造と対応づいてるか確認すること．
 * build.xmlを右クリック->実行->Ant Build(2つ並んでるもののうえのほう）を選択
 * buildファイルに従って，コンパイルしてwarファイルが作成され，tomcatのwebappsディレクトリに配置される．
- * tomcatはver.7の利用を想定している．
+ * tomcatはver.8の利用を想定している(恐らくver.7でも動く)．
 * tomcatのbinディレクトリ内のstartup.batを実行->tomcatが起動し，multiple-dwr.warが配備（デプロイ）される．
 * 正常にtomcatが起動したのを確認後，「http://localhost:8080/multiple-dwr/dwr/jsonp/MultiplePrinter/helloWorld/ryokun/」にアクセス
  * JavaのhelloWorldメソッドに"ryokun"という文字列を引数で与えて呼び出している 
 * ブラウザに「{ "reply":"ryokun:HelloWorld"}」と表示されたら成功．
- * 404エラーなどが出る場合はC:\pleiades4.5\tomcat\7\webappsのmultiple-dwr.warとmultiple-dwrフォルダを削除してant buildからやり直してみる
+ * 404エラーなど，意図しない振る舞いをする場合はC:\pleiades\tomcat\8\webappsのmultiple-dwr.warとmultiple-dwrフォルダを削除してant buildからやり直してみる
 
 
 ## JavaScriptからDWR(Direct Web Remoting)を利用してJavaのメソッドを呼ぶ方法
@@ -133,6 +134,7 @@ DWRを利用することでHTTP/GETの形式でJavaのメソッドを呼ぶこ�
  * https://github.com/igakilab/multiple-dwr/blob/master/testcase/jp/ac/oit/igakilab/dwr/multiple/MultiplePrinterTest.java
 * MultiplePrinterTest.javaを右クリック->実行->JUitテストを選択
 * 期待されないテスト結果が返ってきたものがエラーと表示される。
+  * 失敗するテストケースが一つある．何が問題か確認し，修正してみること．
 
 ## Google Chart APIを利用してDWRから取得したデータをグラフで表示する方法
 * 下記3つのファイルで実現している

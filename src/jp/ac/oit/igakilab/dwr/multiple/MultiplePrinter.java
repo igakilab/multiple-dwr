@@ -19,9 +19,9 @@ public class MultiplePrinter {
 
 
     /**
-     * 1から10までのすべての数値について，
+     * 1からmaxまでのすべての数値について，
      * 以下の条件を満たしながら小さい順にリスト化して返す
-     *   条件1：数値が3の倍数のときは”ryokun”をリストに追加する．
+     *   条件1：数値がmultipleの倍数のときは”ryokun”をリストに追加する．
      * @return 1から10までの数値を変換した文字列のリスト
      */
     public List<String> execute(MultipleForm input) throws InvalidValueException {
@@ -31,7 +31,7 @@ public class MultiplePrinter {
 
 
         if (multiple < 0 || max < 0){
-        	throw new InvalidValueException("倍数は 正の整数(>0)でなければいけません．現在の値：" + multiple);
+        	throw new InvalidValueException("倍数及び最大値は 正の整数(>0)でなければいけません．");
         }
         for(int i= 1; i<=max; i++){
         	if(i % multiple == 0){
