@@ -155,12 +155,11 @@ DWRを利用することでHTTP/GETの形式でJavaのメソッドを呼ぶこ�
  - DBはなんでも良い．たまたまPortable版（インストール作業がファイル解凍だけで環境を汚さない）のPostgreSQLが見つかったので今回はそれを選択した．以下よりzipをDLして好きなところに解凍すればインストールはOK．動かすときはPostgreSQLPortable.exeを実行すれば良い．
    - https://github.com/garethflowers/postgresql-portable/releases
    - 今回はPostgreSQLPortable_9.6.1を利用
-   - PostgreSQLPortable.exeを起動すると，「Warning: Console code page (1252) differs..」を警告がでるので，一度「\q」と打って終了し，以下のページに従って「PostgreSQLPortable_9.6.1\App\PgSQL」にあるpgsql.cmdの6行目あたりにある「chcp 1252 > null」という行を「chcp 932 > null」に変更してから，もう一度PostgreSQLPortable.exeを実行する．
+   - PostgreSQLPortable.exeを起動すると，「Warning: Console code page (1252) differs..」という警告がでるので，一度「\q」と打って終了し，以下のページに従って「PostgreSQLPortable_9.6.1\App\PgSQL」にあるpgsql.cmdの6行目あたりにある「chcp 1252 > null」という行を「chcp 932 > null」に変更してから，もう一度PostgreSQLPortable.exeを実行する．
       - 参考：http://kenpg2.seesaa.net/article/415046025.html
    - デフォルトでは，ポート：5432，ユーザ名：postgres，DB名：postgres，で自動的に起動する．
       - 参考：https://kenpg.bitbucket.io/blog/201505/02.html
-   - デフォルトでは，ポート：5432，ユーザ名：postgres，DB名：postgres，で自動的に起動する．
-   - Webアプリケーションのために以下のコマンドをPostgreSQLPortableのコンソールに一行ずつ順に入力する．なお，以下のコマンドはコンソールに表示されている`postgres=#`に続けて入力することを想定している(`postgres=#`は接続するDBを変更するとそのDB名に変わる)．
+   - Webアプリケーションのために以下のコマンドをPostgreSQLPortableのコンソールに一行ずつ順に入力する．なお，以下のコマンドはコンソールに表示されている`postgres=#`に続けて入力することを想定している(`postgres=#`は接続するDBを変更するとそのDB名に変わる)．
 
 ```sql
 create database product; -- productという名前のDBを作成する．DBの一覧は「\l」と打つことで確認できる．
