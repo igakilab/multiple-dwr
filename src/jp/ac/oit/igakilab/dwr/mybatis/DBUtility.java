@@ -21,7 +21,7 @@ public class DBUtility {
         SqlSessionFactory ssf = null;
 
         try {
-            ssf = new SqlSessionFactoryBuilder().build(Resources.getResourceAsStream("/mybatis-config.xml"));
+            ssf = new SqlSessionFactoryBuilder().build(Resources.getResourceAsStream("mybatis-config.xml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
