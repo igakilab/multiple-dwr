@@ -125,7 +125,7 @@ DWRを利用することでHTTP/GETの形式でJavaのメソッドを呼ぶこ�
  * https://github.com/igakilab/multiple-dwr/tree/master/WebContent/js
 * build.xmlを右クリック->実行->Ant Build(2つ並んでるもののうえのほう）を選択
 * buildファイルのdeployタスクに従って，コンパイルしてwarファイルが作成され，tomcatのwebappsディレクトリに配置される．
-* tomcatのbinディレクトリ(C:\C:\pleiades\tomcat\8\bin)内のstartup.batを実行->tomcatが起動し，multiple-dwr.warが配備（デプロイ）される．
+* tomcatのbinディレクトリ(C:\pleiades\tomcat\8\bin)内のstartup.batを実行->tomcatが起動し，multiple-dwr.warが配備（デプロイ）される．
 * 正常にtomcatが起動したのを確認後，「http://localhost:8080/multiple-dwr/index.html」にアクセス
 * 画面が正常にでて，maxと書いてあるテキストフィールドに整数値，multipleに倍数の値を入れて，正常に実行できたらOK
 
@@ -240,7 +240,7 @@ peach
 - ↑が正常に表示されることを確認後，Webアプリケーションを動かしてみる．
 - build.xmlを右クリックし，実行->Ant Build(2つ並んでるもののうえのほう）を選択
 - buildファイルのdeployタスクに従って，コンパイルしてwarファイルが作成され，tomcatのwebappsディレクトリに配置される．
-- tomcatのbinディレクトリ(C:\C:\pleiades\tomcat\8\bin)内のstartup.batを実行->tomcatが起動し，multiple-dwr.warが配備（デプロイ）される．
+- tomcatのbinディレクトリ(C:\pleiades\tomcat\8\bin)内のstartup.batを実行->tomcatが起動し，multiple-dwr.warが配備（デプロイ）される．
 - 正常にtomcatが起動したのを確認後，「http://localhost:8080/multiple-dwr/dwr/jsonp/ProductPrinter/execute/」にアクセス．
 - apple,melon等のproduct DBのfoodテーブルに登録した情報が下記のようにJSON形式で表示されていればOK
 
