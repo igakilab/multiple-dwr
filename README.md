@@ -89,7 +89,7 @@ DWRを利用することでHTTP/GETの形式でJavaのメソッドを呼ぶこ�
 </dwr>
 ```
 * multiple-dwrプロジェクト直下にbuild.xml, build-windows.xmlを作成し，下記の記述をコピーしておく．
- * https://github.com/igakilab/multiple-dwr/blob/master/build.xml
+ * [build.xml](https://github.com/igakilab/multiple-dwr/blob/7d0eb8efce6277751828cb90423b02931a3acca4/build.xml)
  * https://github.com/igakilab/multiple-dwr/blob/master/build-windows.xml
 * build-windows.xmlにはtomcatとjreのホームディレクトリが絶対パスで指定されている．自分のディレクトリ構造と対応づいてるか確認すること．
 * build.xmlを右クリック->実行->Ant Build(2つ並んでるもののうえのほう）を選択
