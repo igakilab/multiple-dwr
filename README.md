@@ -35,15 +35,15 @@ DWRを利用することでHTTP/GETの形式でJavaのメソッドを呼ぶこ�
 * multiple-dwrプロジェクトのsrcフォルダにパッケージを作成する（例：jp.ac.oit.igakilab.dwr.multiple）
 * 作成したパッケージ内にMultiplePrinterクラスを作成する．
 * MultiplePrinterクラス内に下記helloWorldメソッドを作成する(helloWorldメソッド以外を作成するとコンパイルできないので注意すること）
- * https://github.com/igakilab/multiple-dwr/blob/master/src/jp/ac/oit/igakilab/dwr/multiple/MultiplePrinter.java#L81
+  * https://github.com/igakilab/multiple-dwr/blob/master/src/jp/ac/oit/igakilab/dwr/multiple/MultiplePrinter.java#L81
 * multiple-dwrにWebContentフォルダを作成する．
- * WebContentフォルダ以下にWEB-INFフォルダを作成する．
- * WEB-INFフォルダ以下にlibフォルダを作成する
- * libに下記jarファイルを入れておく
- * https://github.com/igakilab/multiple-dwr/tree/master/WebContent/WEB-INF/lib
-  * DWRは3.0.2 ( http://directwebremoting.org/dwr/downloads/index.html ), commons-loggingは1.2を利用
- * WEB-INF以下にweb.xmlとdwr.xmlの2つのファイルを下記内容で作成する
- * web.xmlはdwrを利用するための設定(tomcat用)で，dwrの利用（デバッグモード付き）とREST呼び出しのための設定が記述されている．dwr.xmlはJavaのメソッドやオブジェクトをDWRに認識させるための設定になる．
+  * WebContentフォルダ以下にWEB-INFフォルダを作成する．
+  * WEB-INFフォルダ以下にlibフォルダを作成する
+  * libに下記jarファイルを入れておく
+  * https://github.com/igakilab/multiple-dwr/tree/master/WebContent/WEB-INF/lib
+    * DWRは3.0.2 ( http://directwebremoting.org/dwr/downloads/index.html ), commons-loggingは1.2を利用
+  * WEB-INF以下にweb.xmlとdwr.xmlの2つのファイルを下記内容で作成する
+  * web.xmlはdwrを利用するための設定(tomcat用)で，dwrの利用（デバッグモード付き）とREST呼び出しのための設定が記述されている．dwr.xmlはJavaのメソッドやオブジェクトをDWRに認識させるための設定になる．
   * 参考：https://github.com/igakilab/multiple-dwr/tree/master/WebContent/WEB-INF/
 
 #### web.xml
@@ -89,40 +89,40 @@ DWRを利用することでHTTP/GETの形式でJavaのメソッドを呼ぶこ�
 </dwr>
 ```
 * multiple-dwrプロジェクト直下にbuild.xml, build-windows.xmlを作成し，下記の記述をコピーしておく．
- * [build.xml](https://github.com/igakilab/multiple-dwr/blob/7d0eb8efce6277751828cb90423b02931a3acca4/build.xml)
- * https://github.com/igakilab/multiple-dwr/blob/master/build-windows.xml
+  * [build.xml](https://github.com/igakilab/multiple-dwr/blob/7d0eb8efce6277751828cb90423b02931a3acca4/build.xml)
+  * [build-windows.xml](https://github.com/igakilab/multiple-dwr/blob/master/build-windows.xml)
 * build-windows.xmlにはtomcatとjreのホームディレクトリが絶対パスで指定されている．自分のディレクトリ構造と対応づいてるか確認すること．
 * build.xmlを右クリック->実行->Ant Build(2つ並んでるもののうえのほう）を選択
 * buildファイルに従って，コンパイルしてwarファイルが作成され，tomcatのwebappsディレクトリに配置される．
- * tomcatはver.8の利用を想定している(恐らくver.7でも動く)．
+  * tomcatはver.8の利用を想定している(恐らくver.7でも動く)．
 * tomcatのbinディレクトリ内のstartup.batを実行->tomcatが起動し，multiple-dwr.warが配備（デプロイ）される．
 * 正常にtomcatが起動したのを確認後，「http://localhost:8080/multiple-dwr/dwr/jsonp/MultiplePrinter/helloWorld/ryokun/」にアクセス
- * JavaのhelloWorldメソッドに"ryokun"という文字列を引数で与えて呼び出している 
+  * JavaのhelloWorldメソッドに"ryokun"という文字列を引数で与えて呼び出している 
 * ブラウザに「{ "reply":"ryokun:HelloWorld"}」と表示されたら成功．
- * 404エラーなど，意図しない振る舞いをする場合はC:\pleiades\tomcat\8\webappsのmultiple-dwr.warとmultiple-dwrフォルダを削除してant buildからやり直してみる
+  * 404エラーなど，意図しない振る舞いをする場合はC:\pleiades\tomcat\8\webappsのmultiple-dwr.warとmultiple-dwrフォルダを削除してant buildからやり直してみる
 
 
 ## JavaScriptからDWR(Direct Web Remoting)を利用してJavaのメソッドを呼ぶ方法
 * 上記で作成したmultiple-dwrプロジェクトに追加する形で実施する．
 * 作成したパッケージに下記クラス（InvalidValueException）を追加する．
- * https://github.com/igakilab/multiple-dwr/blob/master/src/jp/ac/oit/igakilab/dwr/multiple/InvalidValueException.java
+  * https://github.com/igakilab/multiple-dwr/blob/master/src/jp/ac/oit/igakilab/dwr/multiple/InvalidValueException.java
 * 同じパッケージに下記クラス（MultipleForm）を追加する
- * https://github.com/igakilab/multiple-dwr/blob/master/src/jp/ac/oit/igakilab/dwr/multiple/MultipleForm.java
+  * https://github.com/igakilab/multiple-dwr/blob/master/src/jp/ac/oit/igakilab/dwr/multiple/MultipleForm.java
 * MultiplePrinterクラスにexecuteメソッドを追加する
- * https://github.com/igakilab/multiple-dwr/blob/master/src/jp/ac/oit/igakilab/dwr/multiple/MultiplePrinter.java#L27
- * JavaScriptからMultipleFormに入った値を受け取り，解釈して返すメソッド
+  * https://github.com/igakilab/multiple-dwr/blob/master/src/jp/ac/oit/igakilab/dwr/multiple/MultiplePrinter.java#L27
+  * JavaScriptからMultipleFormに入った値を受け取り，解釈して返すメソッド
 * dwr.xmlのallowタグの中（createタグの下）に，下記記述を追加する
- * 参考：https://github.com/igakilab/multiple-dwr/blob/master/WebContent/WEB-INF/dwr.xml
- * これは呼び出すメソッドの引数あるいは返り値に指定されたBean（すべてのフィールドについてsetter/getterが定義されており，デフォルトコンストラクタが存在するJavaのクラス）をDWRに指定するための定義である
- * 同様に対象メソッドが例外を投げる場合はその例外を処理するための定義が下記のように必要
+  * 参考：https://github.com/igakilab/multiple-dwr/blob/master/WebContent/WEB-INF/dwr.xml
+  * これは呼び出すメソッドの引数あるいは返り値に指定されたBean（すべてのフィールドについてsetter/getterが定義されており，デフォルトコンストラクタが存在するJavaのクラス）をDWRに指定するための定義である
+  * 同様に対象メソッドが例外を投げる場合はその例外を処理するための定義が下記のように必要
 ```
     <convert converter="bean" match="jp.ac.oit.igakilab.dwr.multiple.MultipleForm" />
     <convert converter="exception" match="java.lang.Exception" />
 ```
 * WebContentの直下に下記index.htmlを作成する
- * https://github.com/igakilab/multiple-dwr/blob/master/WebContent/index.html
+  * https://github.com/igakilab/multiple-dwr/blob/master/WebContent/index.html
 * WebContentの直下にjsフォルダを作成して，下記のファイル群をコピーしておく
- * https://github.com/igakilab/multiple-dwr/tree/master/WebContent/js
+  * https://github.com/igakilab/multiple-dwr/tree/master/WebContent/js
 * build.xmlを右クリック->実行->Ant Build(2つ並んでるもののうえのほう）を選択
 * buildファイルのdeployタスクに従って，コンパイルしてwarファイルが作成され，tomcatのwebappsディレクトリに配置される．
 * tomcatのbinディレクトリ(C:\pleiades\tomcat\8\bin)内のstartup.batを実行->tomcatが起動し，multiple-dwr.warが配備（デプロイ）される．
@@ -133,7 +133,7 @@ DWRを利用することでHTTP/GETの形式でJavaのメソッドを呼ぶこ�
 * multiple-dwrのプロジェクトを右クリック->新規->ソースフォルダを選択し，フォルダー名をtestcaseにする．
 * testcaseフォルダを右クリック->新規->JUnitテストケースを選択する．
 * 作成されたJUnitテストケースファイルを開き，下記クラス（MultiplePrinterTest.java）を実装する
- * https://github.com/igakilab/multiple-dwr/blob/master/testcase/jp/ac/oit/igakilab/dwr/multiple/MultiplePrinterTest.java
+  * https://github.com/igakilab/multiple-dwr/blob/master/testcase/jp/ac/oit/igakilab/dwr/multiple/MultiplePrinterTest.java
 * MultiplePrinterTest.javaを右クリック->実行->JUitテストを選択
 * 期待されないテスト結果が返ってきたものがエラーと表示される。
   * 失敗するテストケースが一つある．何が問題か確認し，修正してみること．
