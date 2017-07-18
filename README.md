@@ -96,7 +96,7 @@ DWRを利用することでHTTP/GETの形式でJavaのメソッドを呼ぶこ�
 * buildファイルに従って，コンパイルしてwarファイルが作成され，tomcatのwebappsディレクトリに配置される．
   * tomcatはver.8の利用を想定している(恐らくver.7でも動く)．
 * tomcatのbinディレクトリ内のstartup.batを実行->tomcatが起動し，multiple-dwr.warが配備（デプロイ）される．
-* 正常にtomcatが起動したのを確認後，「http://localhost:8080/multiple-dwr/dwr/jsonp/MultiplePrinter/helloWorld/ryokun/」にアクセス
+* 正常にtomcatが起動したのを確認後，[http://localhost:8080/multiple-dwr/dwr/jsonp/MultiplePrinter/helloWorld/ryokun/](http://localhost:8080/multiple-dwr/dwr/jsonp/MultiplePrinter/helloWorld/ryokun/)にアクセス
   * JavaのhelloWorldメソッドに"ryokun"という文字列を引数で与えて呼び出している 
 * ブラウザに「{ "reply":"ryokun:HelloWorld"}」と表示されたら成功．
   * 404エラーなど，意図しない振る舞いをする場合はC:\pleiades\tomcat\8\webappsのmultiple-dwr.warとmultiple-dwrフォルダを削除してant buildからやり直してみる
