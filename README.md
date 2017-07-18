@@ -241,7 +241,7 @@ peach
 - build.xmlを右クリックし，実行->Ant Build(2つ並んでるもののうえのほう）を選択
 - buildファイルのdeployタスクに従って，コンパイルしてwarファイルが作成され，tomcatのwebappsディレクトリに配置される．
 - tomcatのbinディレクトリ(C:\pleiades\tomcat\8\bin)内のstartup.batを実行->tomcatが起動し，multiple-dwr.warが配備（デプロイ）される．
-- 正常にtomcatが起動したのを確認後，「http://localhost:8080/multiple-dwr/dwr/jsonp/ProductPrinter/execute/」にアクセス．
+- 正常にtomcatが起動したのを確認後，[http://localhost:8080/multiple-dwr/dwr/jsonp/ProductPrinter/execute/](http://localhost:8080/multiple-dwr/dwr/jsonp/ProductPrinter/execute/)にアクセス．
 - apple,melon等のproduct DBのfoodテーブルに登録した情報が下記のようにJSON形式で表示されていればOK
 
 ```json
