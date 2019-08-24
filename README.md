@@ -233,3 +233,44 @@ BUILD SUCCESSFUL in 2s
 
 > コラム
 > * 上はtomcat pluginでの実行例なので，最終的に完成したWarをプラグインを利用せずに実行したい場合は，`C:\igakilab\apache-tomcat-8.5.45\webapps` に`multiple-dwr.war` ファイルを直接置き，tomcatのbinディレクトリ内のstartup.batを実行->tomcatが起動し，multiple-dwr.warが配備（デプロイ）される．
+
+## JavaScriptからDWR(Direct Web Remoting)を利用してJavaのメソッドを呼ぶ
+* 上記で作成したmultiple-dwrプロジェクトに追加する形で実施する．
+- 画面左下の[TOMCAT SERVERS]の下の[● apache-tomcat-8.5.45]を右クリックして[Stop]を選択しておくこと．
+* 作成したパッケージに下記クラス（InvalidValueException）を追加する．
+  * https://github.com/igakilab/multiple-dwr/blob/master/src/jp/ac/oit/igakilab/dwr/multiple/InvalidValueException.java
+* 同じパッケージに下記クラス（MultipleForm）を追加する
+  * https://github.com/igakilab/multiple-dwr/blob/master/src/jp/ac/oit/igakilab/dwr/multiple/MultipleForm.java
+* MultiplePrinterクラスにexecuteメソッドを追加する
+  * https://github.com/igakilab/multiple-dwr/blob/master/src/jp/ac/oit/igakilab/dwr/multiple/MultiplePrinter.java#L27
+  * JavaScriptからMultipleFormに入った値を受け取り，解釈して返すメソッド
+* dwr.xmlのallowタグの中（createタグの下）に，下記記述を追加する
+  * 参考：https://github.com/igakilab/multiple-dwr/blob/master/WebContent/WEB-INF/dwr.xml
+  * これは呼び出すメソッドの引数あるいは返り値に指定されたBean（すべてのフィールドについてsetter/getterが定義されており，デフォルトコンストラクタが存在するJavaのクラス）をDWRに指定するための定義である
+  * 同様に対象メソッドが例外を投げる場合はその例外を処理するための定義が下記のように必要
+```xml
+    <convert converter="bean" match="jp.igakilab.dwr.multiple.MultipleForm" />
+    <convert converter="exception" match="java.lang.Exception" />
+```
+* WebContentの直下に下記index.htmlを作成する
+  * https://github.com/igakilab/multiple-dwr/blob/master/WebContent/index.html
+* WebContentの直下にjsフォルダを作成して，下記のファイル群をコピーしておく
+  * https://github.com/igakilab/multiple-dwr/tree/master/WebContent/js
+- vscodeの[ターミナル]が開いていればそこに，開いていない場合は[ターミナル]->[新しいターミナル]をクリックしてターミナルを開く．
+- 恐らくpowershellが開くので，ターミナル画面でEnterしてから，`gradle war`と入力してEnterする
+- 以下のように表示されればOK．
+```
+BUILD SUCCESSFUL in 2s
+2 actionable tasks: 2 executed
+```
+- `multiple-dwr\build\libs` に `multiple-dwr.war` が作成されているので，右クリックして[Run on Tomcat Server]を選択する
+  - Runの前に，画面左下の[TOMCAT SERVERS]の下の[■ apache-tomcat-8.5.45]を確認すること（止まっていればOK）．止まっていない場合は[TOMCAT SERVERS]の下の[●apache-tomcat-8.5.45]を右クリックして[Stop]を選択すること．
+- 画面右下の[出力]エリアに下記のようなメッセージが表示されればOK（ディレクトリ名は環境によって異なるので，必ずしも一致しない）
+  - Tomcatの起動ログがすべて表示されるのでその中の一行
+
+```
+[C:\igakilab\vscode-portable-win64-1.37.1-16\data\appdata\Code\User\workspaceStorage\90c0604480e14b8f3db535f310ce0373\adashen.vscode-tomcat\tomcat\apache-tomcat-8.5.45\webapps\multiple-dwr] has finished in [825] ms
+```
+- 画面左下の[TOMCAT SERVERS]の下に[● apache-tomcat-8.5.45]と表示されればOK（丸は緑色）
+* 正常にtomcatが起動したのを確認後，http://localhost:8080/multiple-dwr/index.html にアクセス
+* 画面が正常にでて，maxと書いてあるテキストフィールドに整数値，multipleに倍数の値を入れて，正常に実行できたらOK
