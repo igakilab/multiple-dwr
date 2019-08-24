@@ -9,5 +9,9 @@
     </create>
     <convert converter="bean" match="jp.igakilab.dwr.multiple.MultipleForm" />
     <convert converter="exception" match="java.lang.Exception" />
+    <create creator="new" javascript="ProductPrinter">
+      <param name="class" value="jp.igakilab.dwr.mybatis.ProductPrinter"/>
+    </create>
+    <convert converter="bean" match="jp.igakilab.dwr.mybatis.*" />
   </allow>
 </dwr>

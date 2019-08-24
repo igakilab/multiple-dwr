@@ -270,3 +270,122 @@ BUILD SUCCESSFUL in 2s
 - 画面左下の[TOMCAT SERVERS]の下に[● apache-tomcat-8.5.45]と表示されればOK（丸は緑色）
 * 正常にtomcatが起動したのを確認後，http://localhost:8080/multiple-dwr/index.html にアクセス
 * 画面が正常にでて，maxと書いてあるテキストフィールドに整数値，multipleに倍数の値を入れて，正常に実行できたらOK
+
+## PostgresqlとMybatisを使ってDBを利用するWebアプリケーションを開発してみる
+### 準備(Database)
+ - DBはなんでも良い．たまたまPortable版（インストール作業がファイル解凍だけで環境を汚さない）のPostgreSQLが見つかったので今回はそれを選択した．動かすときはPostgreSQLPortable.exeを実行すれば良い．
+ - PostgreSQLPortable.exeを起動すると，「Warning: Console code page (1252) differs..」という警告がでるので，一度「\q」と打って終了し，以下のページに従って`C:\igakilab\PostgreSQLPortable_10.4.1\App\PgSQL`にある`pgsql.cmd`の6行目あたりにある「chcp 1252 > null」という行を「chcp 932 > null」に変更してから，もう一度PostgreSQLPortable.exeを実行する．
+   - 参考：http://kenpg2.seesaa.net/article/415046025.html
+   - デフォルトでは，ポート：5432，ユーザ名：postgres，DB名：postgres，で自動的に起動する．
+      - 参考：https://kenpg.bitbucket.io/blog/201505/02.html
+- Webアプリケーションのために以下のコマンドをPostgreSQLPortableのコンソールに一行ずつ順に入力する．なお，以下のコマンドはコンソールに表示されている`postgres=#`あるいは`product=#`に続けて入力することを想定している(`postgres=#`は接続するDBを変更するとそのDB名に変わる)．
+```sql
+-- productという名前のDBを作成する．DBの一覧は「\l」と打つことで確認できる．
+postgres=＃ create database product;
+CREATE DATABASE -- productという名前のDBが作成された
+-- productという名前のDBに接続する．
+postgres=＃ \c product
+データベース "product" にユーザ "postgres" として接続しました。
+-- food tableを作成する．「\z」でテーブルの一覧が，「\d tablename」でtablenameで指定したテーブルのスキーマが表示される．
+product=＃ create table food(name varchar(10), price int);
+CREATE TABLE
+product=＃ insert into food (name, price) VALUES ('apple', 120); -- 各データをfoodテーブルに追加．
+INSERT 0 1
+product=＃ insert into food (name, price) VALUES ('melon', 500);
+INSERT 0 1
+product=＃ insert into food (name, price) VALUES ('peach', 200);
+INSERT 0 1
+```
+- 「select * from food;」と実行すると下記のように追加されたデータを確認できる．
+```
+ name  | price
+-------+-------
+ apple |   120
+ melon |   500
+ peach |   200
+(3 行)
+```
+
+### 準備（OR Mapper (MyBatis)）
+- OR Mapper: DBとJavaのクラスの間を仲介するライブラリのこと．今回はMyBatis（ http://www.mybatis.org/mybatis-3/ja/ ) を利用する．
+- mybatisライブラリ3.5.2を利用する．DLやビルドパスの設定等はgradleが勝手にやってくれる．
+- PostgreSQLを利用するためのJDBCドライバ（要はJavaからpostgresqlを利用するためのソフトウェア）をセットアップする．詳細はgradleが(以下略
+  - なお，利用するDBがPostgreSQLではない場合，対応するDBのJDBCドライバをgradleのdependenciesに設定すれば良い．
+  - `multiple-dwr\src\main\resources` にmybatis-config.xmlとProductMapper.xmlという以下の2つのファイルを新規に作成する
+    - https://github.com/igakilab/multiple-dwr/tree/master/resources
+    - mybatis-config.xml は接続先DBの設定やmapper.xmlの指定を行っている
+    - ProductMapper.xml は↑で作成したproductデータベースのfoodテーブル内の要素をselectするsqlを指定している
+- jp.igakilab.dwr.mybatisというパッケージを追加する
+  - ↑のパッケージ内に，DBUtility.javaを作成する
+    - https://github.com/igakilab/multiple-dwr/blob/master/src/jp/ac/oit/igakilab/dwr/mybatis/DBUtility.java
+    - Mybatisを介してDBにアクセスするための処理が書かれている（どんなプログラムでも再利用可能）
+- ここまではどんなWebアプリケーションでもほぼ同じ(ProductMapper.xmlやDBの内容登録（insert）等は除く)であるため，再利用可能．以下がアプリによって異なるところ．
+
+### postgresqlにアクセスするJavaアプリケーションの実装
+- 下記のファイルを指定されたパッケージに追加する
+  - jp.igakilab.dwr.mybatis.Food.java
+    - https://github.com/igakilab/multiple-dwr/blob/master/src/jp/ac/oit/igakilab/dwr/mybatis/Food.java
+    - productsデータベースのfoodテーブルの中身を保存するBeanクラス
+  - jp.igakilab.dwr.mybatis.ProductPrinter.java
+    - https://github.com/igakilab/multiple-dwr/blob/master/src/jp/ac/oit/igakilab/dwr/mybatis/ProductPrinter.java
+    - Webアプリケーションとして公開するメソッドを実装したクラス（テスト用にmainメソッドも実装している）
+
+#### 確認
+- PostgreSQLが実行されていることを確認する
+- jp.igakilab.dwr.mybatis.ProductPrinterを選択し，F5を押す．
+- `.vscode\launch.json` ファイルが開いて，ProductPrinterクラスの`main`メソッドを実行する設定が自動的に行われるので，そのままもう一度`jp.igakilab.dwr.mybatis.ProductPrinter`を選択し，F5を押す．
+- vscodeのデバッガが起動し，ProductPrinterの`main` メソッドを実行してくれる．
+- mybatisやpostgresqlの設定がうまくいっていれば，下記がコンソールに表示される．
+
+```
+apple
+120
+melon
+500
+peach
+200
+```
+
+- これが表示されなければ，mybatisのconfigかDBUtility.java，ProductPrinterクラスなどが何か間違っている(まだDWRとは無関係)．
+
+### postgresqlにアクセスするWebアプリケーションの実装
+- 画面左下の[TOMCAT SERVERS]の下の[● apache-tomcat-8.5.45]を右クリックして[Stop]を選択しておくこと．
+- dwr.xml (WebContent/WEB-INF/内）の修正
+  - https://github.com/igakilab/multiple-dwr/blob/master/WebContent/WEB-INF/dwr.xml
+  - 修正箇所は`<dwr><allow>`タグ内に下記を追加したところ．
+
+```xml
+    <create creator="new" javascript="ProductPrinter">
+      <param name="class" value="jp.igakilab.dwr.mybatis.ProductPrinter"/>
+    </create>
+    <convert converter="bean" match="jp.igakilab.dwr.mybatis.*" />
+```
+
+- vscodeの[ターミナル]が開いていればそこに，開いていない場合は[ターミナル]->[新しいターミナル]をクリックしてターミナルを開く．
+- 恐らくpowershellが開くので，ターミナル画面でEnterしてから，`gradle war`と入力してEnterする
+- 以下のように表示されればOK．
+```
+BUILD SUCCESSFUL in 2s
+2 actionable tasks: 2 executed
+```
+- `multiple-dwr\build\libs` に `multiple-dwr.war` が作成されているので，右クリックして[Run on Tomcat Server]を選択する
+  - Runの前に，画面左下の[TOMCAT SERVERS]の下の[■ apache-tomcat-8.5.45]を確認すること（止まっていればOK）．止まっていない場合は[TOMCAT SERVERS]の下の[●apache-tomcat-8.5.45]を右クリックして[Stop]を選択すること．
+- tomcatが起動し，multiple-dwr.warが配備（デプロイ）される．
+- 正常にtomcatが起動したのを確認後，[http://localhost:8080/multiple-dwr/dwr/jsonp/ProductPrinter/execute/](http://localhost:8080/multiple-dwr/dwr/jsonp/ProductPrinter/execute/)にアクセス．
+- apple,melon等のproduct DBのfoodテーブルに登録した情報が下記のようにJSON形式で表示されていればOK
+
+```json
+[
+  {
+    "name": "apple",
+    "price": 120
+  },
+  {
+    "name": "melon",
+    "price": 500
+  },
+  {
+    "name": "peach",
+    "price": 200
+  }
+]
