@@ -1,0 +1,19 @@
+apply plugin: 'java'
+apply plugin: 'war'
+
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
+
+[compileJava, compileTestJava]*.options*.encoding = 'utf-8'
+
+repositories {
+     jcenter()
+}
+
+dependencies{
+    compile group: 'org.directwebremoting', name: 'dwr', version: '3.0.2-RELEASE'
+    testCompile 'junit:junit:4.12'
+    compile group: 'commons-logging', name: 'commons-logging', version: '1.2'
+    compile group: 'org.mybatis', name: 'mybatis', version: '3.5.2'
+    compile group: 'org.postgresql', name: 'postgresql', version: '42.2.6'
+}
