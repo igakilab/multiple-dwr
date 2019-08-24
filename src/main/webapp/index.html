@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="content-language" content="ja">
+<meta charset="UTF-8">
+    <script type="text/javascript" src="dwr/engine.js"></script>
+    <script type="text/javascript" src="dwr/util.js"></script>
+    <script type="text/javascript" src="js/jquery-3.4.1.slim.min.js"></script>
+    <script type="text/javascript" src="js/jquery.serialize.js"></script>
+    <script type="text/javascript" src="dwr/interface/MultiplePrinter.js"></script>
+    <script type="text/javascript">
+      function update(){
+        var formData = $('#csprinter_form').serializeJson();
+        MultiplePrinter.execute(formData, {
+          callback: function(data) {
+            $('#csprinterReply').text(data);
+            $('#error_message').text("");
+          },
+          errorHandler: updateErrorMessage
+        });
+      }
+      function updateErrorMessage(message, exception){
+        $('#error_message').text(message);
+        $('#csprinterReply').text("");
+      }
+    </script>
+  </head>
+  <body>
+    <p>
+      <form id="csprinter_form">
+        最大値: <input type="text" name="max" value="10"/><br/>
+        指定した倍数の数字をryokunに変える: <input type="text" name="multiple" value="3"/><br/>
+        <input value="Send" type="button" onclick="update()"/>
+      </form>
+    </p><p>
+      Reply: <span id="csprinterReply"></span>
+    </p><p>
+      <span id="error_message" class="error"></span>
+    </p>
+  </body>
+</html>
