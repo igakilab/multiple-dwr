@@ -237,25 +237,21 @@ BUILD SUCCESSFUL in 2s
 ## JavaScriptからDWR(Direct Web Remoting)を利用してJavaのメソッドを呼ぶ
 * 上記で作成したmultiple-dwrプロジェクトに追加する形で実施する．
 - 画面左下の[TOMCAT SERVERS]の下の[● apache-tomcat-8.5.45]を右クリックして[Stop]を選択しておくこと．
-* 作成したパッケージに下記クラス（InvalidValueException）を追加する．
-  * https://github.com/igakilab/multiple-dwr/blob/master/src/jp/ac/oit/igakilab/dwr/multiple/InvalidValueException.java
-* 同じパッケージに下記クラス（MultipleForm）を追加する
-  * https://github.com/igakilab/multiple-dwr/blob/master/src/jp/ac/oit/igakilab/dwr/multiple/MultipleForm.java
-* MultiplePrinterクラスにexecuteメソッドを追加する
-  * https://github.com/igakilab/multiple-dwr/blob/master/src/jp/ac/oit/igakilab/dwr/multiple/MultiplePrinter.java#L27
-  * JavaScriptからMultipleFormに入った値を受け取り，解釈して返すメソッド
+- 作成したパッケージに`InvalidValueException.java`, `MultipleForm.java` を新規に追加し，`MultiplePrinter` クラスに`execute` メソッド（JavaScriptからMultipleFormに入った値を受け取り，解釈して返すメソッド）を追加すること
+  - 各javaファイルは下記のとおりにすること
+  - https://github.com/igakilab/multiple-dwr/tree/71a947b3fa9d6b06b29cc592459e16508387c394/src/main/java/jp/igakilab/dwr/multiple
 * dwr.xmlのallowタグの中（createタグの下）に，下記記述を追加する
-  * 参考：https://github.com/igakilab/multiple-dwr/blob/master/WebContent/WEB-INF/dwr.xml
+  * 参考：https://github.com/igakilab/multiple-dwr/blob/71a947b3fa9d6b06b29cc592459e16508387c394/src/main/webapp/WEB-INF/dwr.xml
   * これは呼び出すメソッドの引数あるいは返り値に指定されたBean（すべてのフィールドについてsetter/getterが定義されており，デフォルトコンストラクタが存在するJavaのクラス）をDWRに指定するための定義である
   * 同様に対象メソッドが例外を投げる場合はその例外を処理するための定義が下記のように必要
 ```xml
     <convert converter="bean" match="jp.igakilab.dwr.multiple.MultipleForm" />
     <convert converter="exception" match="java.lang.Exception" />
 ```
-* WebContentの直下に下記index.htmlを作成する
-  * https://github.com/igakilab/multiple-dwr/blob/master/WebContent/index.html
-* WebContentの直下にjsフォルダを作成して，下記のファイル群をコピーしておく
-  * https://github.com/igakilab/multiple-dwr/tree/master/WebContent/js
+* `multiple-dwr\src\main\webapp`に下記`index.html`を作成する
+  * https://github.com/igakilab/multiple-dwr/blob/71a947b3fa9d6b06b29cc592459e16508387c394/src/main/webapp/index.html
+* `multiple-dwr\src\main\webapp`にjsフォルダを作成して，下記のファイル群をコピーしておく
+  * https://github.com/igakilab/multiple-dwr/tree/71a947b3fa9d6b06b29cc592459e16508387c394/src/main/webapp/js
 - vscodeの[ターミナル]が開いていればそこに，開いていない場合は[ターミナル]->[新しいターミナル]をクリックしてターミナルを開く．
 - 恐らくpowershellが開くので，ターミナル画面でEnterしてから，`gradle war`と入力してEnterする
 - 以下のように表示されればOK．
