@@ -312,22 +312,22 @@ INSERT 0 1
 - PostgreSQLを利用するためのJDBCドライバ（要はJavaからpostgresqlを利用するためのソフトウェア）をセットアップする．詳細はgradleが(以下略
   - なお，利用するDBがPostgreSQLではない場合，対応するDBのJDBCドライバをgradleのdependenciesに設定すれば良い．
   - `multiple-dwr\src\main\resources` にmybatis-config.xmlとProductMapper.xmlという以下の2つのファイルを新規に作成する
-    - https://github.com/igakilab/multiple-dwr/tree/master/resources
+    - https://github.com/igakilab/multiple-dwr/tree/4ca442ae36236509f4ca2fde6c6d8128bc592759/src/main/resources
     - mybatis-config.xml は接続先DBの設定やmapper.xmlの指定を行っている
     - ProductMapper.xml は↑で作成したproductデータベースのfoodテーブル内の要素をselectするsqlを指定している
 - jp.igakilab.dwr.mybatisというパッケージを追加する
   - ↑のパッケージ内に，DBUtility.javaを作成する
-    - https://github.com/igakilab/multiple-dwr/blob/master/src/jp/ac/oit/igakilab/dwr/mybatis/DBUtility.java
+    - https://github.com/igakilab/multiple-dwr/blob/4ca442ae36236509f4ca2fde6c6d8128bc592759/src/main/java/jp/igakilab/dwr/mybatis/DBUtility.java
     - Mybatisを介してDBにアクセスするための処理が書かれている（どんなプログラムでも再利用可能）
 - ここまではどんなWebアプリケーションでもほぼ同じ(ProductMapper.xmlやDBの内容登録（insert）等は除く)であるため，再利用可能．以下がアプリによって異なるところ．
 
 ### postgresqlにアクセスするJavaアプリケーションの実装
 - 下記のファイルを指定されたパッケージに追加する
   - jp.igakilab.dwr.mybatis.Food.java
-    - https://github.com/igakilab/multiple-dwr/blob/master/src/jp/ac/oit/igakilab/dwr/mybatis/Food.java
+    - https://github.com/igakilab/multiple-dwr/blob/4ca442ae36236509f4ca2fde6c6d8128bc592759/src/main/java/jp/igakilab/dwr/mybatis/Food.java
     - productsデータベースのfoodテーブルの中身を保存するBeanクラス
   - jp.igakilab.dwr.mybatis.ProductPrinter.java
-    - https://github.com/igakilab/multiple-dwr/blob/master/src/jp/ac/oit/igakilab/dwr/mybatis/ProductPrinter.java
+    - https://github.com/igakilab/multiple-dwr/blob/4ca442ae36236509f4ca2fde6c6d8128bc592759/src/main/java/jp/igakilab/dwr/mybatis/ProductPrinter.java
     - Webアプリケーションとして公開するメソッドを実装したクラス（テスト用にmainメソッドも実装している）
 
 #### 確認
@@ -351,7 +351,7 @@ peach
 ### postgresqlにアクセスするWebアプリケーションの実装
 - 画面左下の[TOMCAT SERVERS]の下の[● apache-tomcat-8.5.45]を右クリックして[Stop]を選択しておくこと．
 - dwr.xml (WebContent/WEB-INF/内）の修正
-  - https://github.com/igakilab/multiple-dwr/blob/master/WebContent/WEB-INF/dwr.xml
+  - https://github.com/igakilab/multiple-dwr/blob/4ca442ae36236509f4ca2fde6c6d8128bc592759/src/main/webapp/WEB-INF/dwr.xml
   - 修正箇所は`<dwr><allow>`タグ内に下記を追加したところ．
 
 ```xml
@@ -389,3 +389,15 @@ BUILD SUCCESSFUL in 2s
     "price": 200
   }
 ]
+```
+
+# おまけ
+## jUnitでテストを行う。
+- `multiple-dwr\src\test\java\jp\igakilab\dwr\multiple`に下記クラス（MultiplePrinterTest.java）を実装する
+  * https://github.com/igakilab/multiple-dwr/blob/master/testcase/jp/ac/oit/igakilab/dwr/multiple/MultiplePrinterTest.java
+- vscodeの[ターミナル]が開いていればそこに，開いていない場合は[ターミナル]->[新しいターミナル]をクリックしてターミナルを開く．
+- 恐らくpowershellが開くので，ターミナル画面でEnterしてから，`gradle test`と入力してEnterする
+* 期待されないテスト結果が返ってきたものがエラーと表示される。
+  * 失敗するテストケースが一つある．何が問題か確認し，修正してみること．
+  - There were failing tests. See the report at: file:///C:/Users/???????????????/multiple-dwr/build/reports/tests/test/index.html と表示されるので，対象のファイルをブラウザで開いてみるとどこでエラーが発生したのかが分かる．
+- 自分の作成したJavaのプログラムが正常に動作するかを確認したり，バグが発生したところをちゃんと直せたか確認したりするのに有用なので，積極的に使ってみると良い．
