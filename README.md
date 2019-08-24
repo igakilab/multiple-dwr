@@ -1,17 +1,32 @@
 # multiple-dwr
 
 - このリポジトリで学習できること
+<!-- TOC -->
 
-1. DWR(Direct Web Remoting)を利用してREST形式でJavaのメソッドを呼ぶ方法
-   * http://directwebremoting.org/dwr/index.html
-2. JavaScriptからDWR(Direct Web Remoting)を利用してJavaのメソッドを呼ぶ方法
-3. jUnitを用いた単体テストの作成
-4. antを用いたビルドやテストの実行方法
-5. Google Chart APIを利用してDWRから取得したデータをグラフで表示する方法
-   * URLの引数（クエリパラメータ）を利用する方法
-   * Date型の引数を利用してJavaのメソッドを呼び出す方法
-   * ArrayListのsortをラムダ式で行う方法
-6. PostgresqlとMybatisを使ってDBを利用するWebアプリケーションを開発してみる
+- [multiple-dwr](#multiple-dwr)
+- [準備](#準備)
+  - [準備(ソフトウェアのインストール)](#準備ソフトウェアのインストール)
+  - [準備(環境変数の設定)](#準備環境変数の設定)
+  - [準備(vscode拡張機能のインストール)](#準備vscode拡張機能のインストール)
+  - [準備(プロジェクトフォルダの作成と初期設定)](#準備プロジェクトフォルダの作成と初期設定)
+  - [準備(Javaプロジェクトの設定とディレクトリの作成)](#準備javaプロジェクトの設定とディレクトリの作成)
+  - [準備(build.gradleの設定)](#準備buildgradleの設定)
+  - [準備(Tomcat for Javaの設定)](#準備tomcat-for-javaの設定)
+- [DWRを利用したWebアプリケーション開発](#dwrを利用したwebアプリケーション開発)
+  - [DWRを利用してREST形式でJavaのメソッドを呼ぶ](#dwrを利用してrest形式でjavaのメソッドを呼ぶ)
+      - [web.xml](#webxml)
+      - [dwr.xml](#dwrxml)
+  - [JavaScriptからDWR(Direct Web Remoting)を利用してJavaのメソッドを呼ぶ](#javascriptからdwrdirect-web-remotingを利用してjavaのメソッドを呼ぶ)
+  - [PostgresqlとMybatisを使ってDBを利用するWebアプリケーションを開発してみる](#postgresqlとmybatisを使ってdbを利用するwebアプリケーションを開発してみる)
+    - [準備(Database)](#準備database)
+    - [準備（OR Mapper (MyBatis)）](#準備or-mapper-mybatis)
+    - [postgresqlにアクセスするJavaアプリケーションの実装](#postgresqlにアクセスするjavaアプリケーションの実装)
+      - [確認](#確認)
+    - [postgresqlにアクセスするWebアプリケーションの実装](#postgresqlにアクセスするwebアプリケーションの実装)
+- [おまけ](#おまけ)
+  - [jUnitでテストを行う。](#junitでテストを行う)
+
+<!-- /TOC -->
 
 - 本プロジェクトを一から作成する手順を示し，上記の解説を行う．
 - なお，本READMEはvscode版になっている．過去に公開したeclipse版は↓を参照すること
@@ -394,7 +409,7 @@ BUILD SUCCESSFUL in 2s
 # おまけ
 ## jUnitでテストを行う。
 - `multiple-dwr\src\test\java\jp\igakilab\dwr\multiple`に下記クラス（MultiplePrinterTest.java）を実装する
-  * https://github.com/igakilab/multiple-dwr/blob/master/testcase/jp/ac/oit/igakilab/dwr/multiple/MultiplePrinterTest.java
+  * https://github.com/igakilab/multiple-dwr/blob/1975ac857be185d56cc7be74ad02eb75cf5cdfdb/src/test/java/jp/igakilab/dwr/multiple/MultiplePrinterTest.java
 - vscodeの[ターミナル]が開いていればそこに，開いていない場合は[ターミナル]->[新しいターミナル]をクリックしてターミナルを開く．
 - 恐らくpowershellが開くので，ターミナル画面でEnterしてから，`gradle test`と入力してEnterする
 * 期待されないテスト結果が返ってきたものがエラーと表示される。
