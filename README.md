@@ -163,11 +163,11 @@ dependencies{
 - DWRを利用することでHTTP/GETの形式でJavaのメソッドを呼ぶことができる．返り値はjsonになる．
 * multiple-dwrプロジェクトの`src\main\java`フォルダにパッケージを作成する（例：jp.igakilab.dwr.multiple）
 * 作成したパッケージ内にMultiplePrinterクラスを作成する．
-* MultiplePrinterクラス内に下記helloWorldメソッドを作成する(helloWorldメソッド以外を作成するとコンパイルできないので注意すること）
-  * https://github.com/igakilab/multiple-dwr/blob/master/src/jp/ac/oit/igakilab/dwr/multiple/MultiplePrinter.java#L81
+* MultiplePrinterクラスの中身を下記のようにし，helloWorldメソッドを作成する(helloWorldメソッド以外を作成するとコンパイルできないので注意すること）
+  * https://github.com/igakilab/multiple-dwr/blob/1df86590ccf348c0c495be00cb9a2036e3fb152b/src/main/java/jp/igakilab/dwr/multiple/MultiplePrinter.java
 * WEB-INF以下にweb.xmlとdwr.xmlの2つのファイルを下記内容で作成する
 * web.xmlはdwrを利用するための設定(tomcat用)で，dwrの利用（デバッグモード付き）とREST呼び出しのための設定が記述されている．dwr.xmlはJavaのメソッドやオブジェクトをDWRに認識させるための設定になる．
-* 参考：https://github.com/igakilab/multiple-dwr/tree/master/WebContent/WEB-INF/
+  * 参考：https://github.com/igakilab/multiple-dwr/tree/1df86590ccf348c0c495be00cb9a2036e3fb152b/src/main/webapp/WEB-INF
 
 #### web.xml
 ```xml
@@ -219,7 +219,7 @@ BUILD SUCCESSFUL in 2s
 2 actionable tasks: 2 executed
 ```
 - `multiple-dwr\build\libs` に `multiple-dwr.war` が作成されているので，右クリックして[Run on Tomcat Server]を選択する
-- 画面右下の[出力]エリアに下記のようなメッセージが表示されればOK
+- 画面右下の[出力]エリアに下記のようなメッセージが表示されればOK（ディレクトリ名は環境によって異なるので，必ずしも一致しない）
   - Tomcatの起動ログがすべて表示されるのでその中の一行
 
 ```
