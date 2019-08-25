@@ -162,7 +162,7 @@ dependencies{
 }
 ```
 - 保存してしばらくするとdependenciesで指定されたライブラリが自動的にDLされる（なのでネットワークに接続した状態で実施すること）．
-- dependenciesの1つ目はDWRのライブラリ，2つ目はloggingツール（DWRが利用する）．テストツール，3つ目はテストツール．4,5つ目はデータベース利用のためのライブラリになっている．
+- dependenciesの1つ目はDWRのライブラリ，2つ目はloggingツール（DWRが利用する）．3つ目はテストツール．4,5個目はデータベース利用のためのライブラリになっている．
 
 ## 準備(Tomcat for Javaの設定)
 - vscodeのTomcatプラグインの設定を行う
@@ -247,7 +247,7 @@ BUILD SUCCESSFUL in 2s
   * 404エラーなど，意図しない振る舞いをする場合は[TOMCAT SERVERS]の[●apache-tomcat-8.5.45]を右クリックして[Stop]を選択し，web.xmlやdwr.xmlを確認してから，`gradle war`を入力するところからやり直すこと．
 
 > コラム
-> * 上はtomcat pluginでの実行例なので，最終的に完成したWarをプラグインを利用せずに実行したい場合は，`C:\igakilab\apache-tomcat-8.5.45\webapps` に`multiple-dwr.war` ファイルを直接置き，tomcatのbinディレクトリ内のstartup.batを実行->tomcatが起動し，multiple-dwr.warが配備（デプロイ）される．
+> * 上はtomcat pluginでの実行例なので，最終的に完成したWarをプラグインを利用せずに実行したい場合は，`C:\igakilab\apache-tomcat-8.5.45\webapps` に`multiple-dwr.war` ファイルを直接置き，tomcatのbinディレクトリ内のstartup.batを実行すると良い．tomcatが起動し，multiple-dwr.warが配備（デプロイ）される．
 
 ## JavaScriptからDWR(Direct Web Remoting)を利用してJavaのメソッドを呼ぶ
 * 上記で作成したmultiple-dwrプロジェクトに追加する形で実施する．
