@@ -21,10 +21,20 @@ public class ProductPrinter {
     return foodList;
   }
 
+  /**
+   * Foodクラスと同じデータ構造のオブジェクトをJSから受け取り，拡張for文で1つずつinsertする例
+   *
+   * @param foodList
+   */
   public void insertFood(ArrayList<Food> foodList) {
-    for (Food f : foodList) {
-      System.out.println(f.getName());
-      System.out.println(f.getPrice());
+    try (SqlSession session = factory.openSession()) {
+      for (Food f : foodList) {
+        int ret = session.insert("igakilab.mybatis.ProductMapper.insertFood", f);// 1つずつinsert
+        System.out.println("Return:" + ret);
+        System.out.println(f.getName());
+        System.out.println(f.getPrice());
+      }
+      session.commit();// これを呼び出すと書き込まれる
     }
   }
 

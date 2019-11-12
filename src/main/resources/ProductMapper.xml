@@ -6,4 +6,8 @@
   <select id="selectFood" resultType="jp.igakilab.dwr.mybatis.Food">
     select name, price from food;
   </select>
+  <insert id="insertFood">
+    insert into food (name,price)
+    values (#{name}, #{price})
+  </insert>
 </mapper>
