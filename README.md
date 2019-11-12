@@ -437,6 +437,11 @@ BUILD SUCCESSFUL in 2s
   - ポイント：public void insertFood(ArrayList<Food> foodList)で，FoodクラスのArrayListを受け取り，拡張for文で一つずつFoodクラスのオブジェクトをinsertしているところ．なお，最後にsession.commit()を呼ばないとDBへの書き込みは行われない．
 - http://localhost:8080/multiple-dwr/array.html にアクセスし，InsertArrayボタンをクリックすると，console.logに`insert_food実行完了`と表示され，postgresqlのproduct dbのfoodテーブルに書き込まれる．
 
+### 配列を含むjsonオブジェクトをhtml(js)からdwr経由でJavaにわたすサンプル
+- https://github.com/igakilab/multiple-dwr/commit/db0475d0488893f2f88125faae63fac8fae6f19d
+  - jsonオブジェクトと同じ構造のJavaのオブジェクト（この場合はDeck.java）を作成し，Java側の仮引数で受け取ると良い．jsonの配列はJava側でArrayListとして受け取れる
+- http://localhost:8080/multiple-dwr/array.html にアクセスし，InsertCardsボタンをクリックすると，console.logに`insertDeck実行完了`と表示され，tomcatのコンソールにユーザ名及び数値が表示される．
+
 # おまけ
 ## jUnitでテストを行う。
 - `multiple-dwr\src\test\java\jp\igakilab\dwr\multiple`に下記クラス（MultiplePrinterTest.java）を実装する
