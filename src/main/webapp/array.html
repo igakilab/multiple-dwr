@@ -37,6 +37,15 @@
         errorHandler: updateErrorMessage
       });
     }
+    function insertCards() {
+      var deck = { "name": "user1", "cards": [0, 2, 4, 1, 3] };
+      ProductPrinter.insertDeck(deck, {
+        callback: function () {
+          console.log("insertDeck実行完了")
+        },
+        errorHandler: updateErrorMessage
+      });
+    }
   </script>
 </head>
 
@@ -45,6 +54,7 @@
     <form id="pprinter_form">
       <input value="GetFoodList" type="button" onclick="update()" />
       <input value="InsertArray" type="button" onclick="insertArray()" />
+      <input value="InsertCards" type="button" onclick="insertCards()" />
     </form>
   </p>
   <p>

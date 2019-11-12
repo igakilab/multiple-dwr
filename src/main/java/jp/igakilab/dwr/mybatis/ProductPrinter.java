@@ -38,6 +38,13 @@ public class ProductPrinter {
     }
   }
 
+  public void insertDeck(Deck deck) {
+    System.out.println(deck.getName());
+    for (Integer i : deck.getCards()) {
+      System.out.print(i);
+    }
+  }
+
   public static void main(String[] args) {
     ProductPrinter pp = new ProductPrinter();
     pp.execute();
