@@ -320,6 +320,7 @@ INSERT 0 1
  peach |   200
 (3 行)
 ```
+- postgresqlの操作についてはこちらを参考に： https://qiita.com/aosho235/items/c657e2fcd15fa0647471
 
 ### 準備（OR Mapper (MyBatis)）
 - OR Mapper: DBとJavaのクラスの間を仲介するライブラリのこと．今回はMyBatis（ http://www.mybatis.org/mybatis-3/ja/ ) を利用する．
@@ -421,6 +422,17 @@ BUILD SUCCESSFUL in 2s
 - array.htmlのL19のforEachでは，dataから1つずつ取得し，1つ分をfoodという変数にほりこんでいる．forEachの中ではfood.nameなどで各値を取得している．
 - data変数に何が入っているかは，L17のconsole.log(data)でブラウザの検証機能のconsole画面などで確認できるようになっている．
 
+### htmlで作成したjsonオブジェクトの配列をdwr経由でJavaにわたすサンプル
+- https://github.com/igakilab/multiple-dwr/commit/871cfeca270888a503f5304e244865073f766699
+  - これの` public void insertFood(ArrayList<Food> foodList) `とJSのinsertArray()が相当する
+- http://localhost:8080/multiple-dwr/array.html にアクセスし，InsertArrayボタンをクリックすると，console.logに`insert_food実行完了`と表示され，tomcatのコンソールにさんまやぶり大根の情報が表示される．
+- html側で，javascriptが作成した辞書型の配列をinsertFoodにわたすと，Java側でArrayList<Food>として受け取ることができる．
+- 注意：`gradlw war` を実行して，Tomcatを実行したままwarを更新しても，Javaのファイルが更新されないことがあるので（おそらくtomcatの問題），その場合は一度TomcatをStopしてから書き込むこと．
+
+### htmlで作成したjsonオブジェクトの配列をdwr経由でJavaにわたし，Postgresqlに書き込むサンプル
+- https://github.com/igakilab/multiple-dwr/commit/f7b46ab5e6df2e8386af638328b86f1a5557f9bc
+  - ポイント：public void insertFood(ArrayList<Food> foodList)で，FoodクラスのArrayListを受け取り，拡張for文で一つずつFoodクラスのオブジェクトをinsertしているところ．なお，最後にsession.commit()を呼ばないとDBへの書き込みは行われない．
+- http://localhost:8080/multiple-dwr/array.html にアクセスし，InsertArrayボタンをクリックすると，console.logに`insert_food実行完了`と表示され，postgresqlのproduct dbのfoodテーブルに書き込まれる．
 
 # おまけ
 ## jUnitでテストを行う。
