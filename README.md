@@ -23,6 +23,9 @@
     - [postgresqlにアクセスするJavaアプリケーションの実装](#postgresqlにアクセスするjavaアプリケーションの実装)
       - [確認](#確認)
     - [postgresqlにアクセスするWebアプリケーションの実装](#postgresqlにアクセスするwebアプリケーションの実装)
+    - [postgresqlのデータをListで受け取ってhtmlにjsで表示するサンプル](#postgresqlのデータをlistで受け取ってhtmlにjsで表示するサンプル)
+    - [htmlで作成したjsonオブジェクトの配列をdwr経由でJavaにわたすサンプル](#htmlで作成したjsonオブジェクトの配列をdwr経由でjavaにわたすサンプル)
+    - [htmlで作成したjsonオブジェクトの配列をdwr経由でJavaにわたし，Postgresqlに書き込むサンプル](#htmlで作成したjsonオブジェクトの配列をdwr経由でjavaにわたしpostgresqlに書き込むサンプル)
 - [おまけ](#おまけ)
   - [jUnitでテストを行う。](#junitでテストを行う)
 
