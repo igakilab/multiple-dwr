@@ -28,13 +28,23 @@
       $('#error_message').text(message);
       $('#pprinterReply').text("");
     }
+    function insertArray() {
+      var foodArray = [{ name: "さんま", price: 100 }, { name: "ぶり大根", price: 780 }];
+      ProductPrinter.insertFood(foodArray, {
+        callback: function () {
+          console.log("insert_food実行完了")
+        },
+        errorHandler: updateErrorMessage
+      });
+    }
   </script>
 </head>
 
 <body>
   <p>
     <form id="pprinter_form">
-      <input value="Send" type="button" onclick="update()" />
+      <input value="GetFoodList" type="button" onclick="update()" />
+      <input value="InsertArray" type="button" onclick="insertArray()" />
     </form>
   </p>
   <p>
