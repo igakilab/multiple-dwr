@@ -4,6 +4,7 @@
   "workbench.colorTheme": "Default Light+",
   "workbench.editor.labelFormat": "short", // タブに表示する文字列の設定
   "workbench.editor.tabSizing": "shrink", // タブの表示設定
+  "java.home": "c:\\igakilab\\openjdk1.8.0.212",
   "files.eol": "\n",
   "files.autoSave": "onFocusChange",
   "files.insertFinalNewline": true, // ファイルの保存時に末尾を改行

@@ -406,6 +406,22 @@ BUILD SUCCESSFUL in 2s
 ]
 ```
 
+### postgresqlのデータをListで受け取ってhtmlにjsで表示するサンプル
+- https://github.com/igakilab/multiple-dwr/commit/caae18c9088c3f71a8cbd38b43073da8187899f1
+- この↑array.html実装．
+- http://localhost:8080/multiple-dwr/array.html にアクセスし，Sendボタンをクリックすると表示される．
+- ProductPrinter.execute()から帰ってくるList<Food>がarray.htmlのL15のdataに返ってくる．今回の例ではデータが2つなので，data[0]~data[2]に以下のように格納されている．
+
+```javascript
+0: {name: "apple", price: 120}
+1: {name: "melon", price: 500}
+2: {name: "peach", price: 200}
+```
+
+- array.htmlのL19のforEachでは，dataから1つずつ取得し，1つ分をfoodという変数にほりこんでいる．forEachの中ではfood.nameなどで各値を取得している．
+- data変数に何が入っているかは，L17のconsole.log(data)でブラウザの検証機能のconsole画面などで確認できるようになっている．
+
+
 # おまけ
 ## jUnitでテストを行う。
 - `multiple-dwr\src\test\java\jp\igakilab\dwr\multiple`に下記クラス（MultiplePrinterTest.java）を実装する
