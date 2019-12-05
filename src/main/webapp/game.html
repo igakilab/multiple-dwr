@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="content-language" content="ja">
+  <meta charset="UTF-8">
+  <script type="text/javascript" src="dwr/engine.js"></script>
+  <script type="text/javascript" src="dwr/util.js"></script>
+  <script type="text/javascript" src="js/jquery-3.4.1.slim.min.js"></script>
+  <script type="text/javascript" src="js/jquery.serialize.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+  <script type="text/javascript" src="dwr/interface/MultipleLogin.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      if ($.cookie("player") == null) {
+        $('#user_form').show();
+      } else {
+        $('#logout_form').show();
+        $('#login_name').show();
+        $('#player_name').text($.cookie('player')); //クッキーから名前の取得
+      }
+    });
+    function update() {
+      var formData = $('#user_form').serializeJson();
+      console.log(formData.name);
+      $.cookie('player', formData.name); //クッキーに名前の保存
+      MultipleLogin.login(formData.name, {
+        callback: function (data) {
+          $('#user_form').hide();
+          $('#logout_form').show();
+          $('#login_name').show();
+          $('#reply').text(data);
+          $('#error_message').text("");
+        },
+        errorHandler: updateErrorMessage
+      });
+    }
+    function updateErrorMessage(message, exception) {
+      $('#error_message').text(message);
+      $('#csprinterReply').text("");
+    }
+    function delete_cookie() {
+      $.removeCookie('player');//クッキーの削除
+      window.location.reload();//画面更新
+    }
+  </script>
+</head>
+
+<body>
+  <p>
+    <form id="user_form" hidden>
+      Name: <input type="text" name="name" /><br />
+      <input value="Send" type="button" onclick="update()" />
+    </form>
+    <form id="logout_form" hidden>
+      <input value="logout" type="button" onclick="delete_cookie()" />
+    </form>
+  </p>
+  <p id="login_name" hidden>
+    Name: <span id="player_name"></span><br />
+    <span id="reply"></span>
+  </p>
+  <p>
+    <span id="error_message" class="error"></span>
+  </p>
+</body>
+
+</html>
