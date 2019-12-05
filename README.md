@@ -1,4 +1,4 @@
-# multiple-dwr
+# 1. multiple-dwr
 
 - このリポジトリで学習できること
 <!-- TOC -->
@@ -26,6 +26,8 @@
     - [postgresqlのデータをListで受け取ってhtmlにjsで表示するサンプル](#postgresqlのデータをlistで受け取ってhtmlにjsで表示するサンプル)
     - [htmlで作成したjsonオブジェクトの配列をdwr経由でJavaにわたすサンプル](#htmlで作成したjsonオブジェクトの配列をdwr経由でjavaにわたすサンプル)
     - [htmlで作成したjsonオブジェクトの配列をdwr経由でJavaにわたし，Postgresqlに書き込むサンプル](#htmlで作成したjsonオブジェクトの配列をdwr経由でjavaにわたしpostgresqlに書き込むサンプル)
+    - [配列を含むjsonオブジェクトをhtml(js)からdwr経由でJavaにわたすサンプル](#配列を含むjsonオブジェクトをhtmljsからdwr経由でjavaにわたすサンプル)
+    - [クッキーを使うサンプル](#クッキーを使うサンプル)
 - [おまけ](#おまけ)
   - [jUnitでテストを行う。](#junitでテストを行う)
 
@@ -35,8 +37,9 @@
 - なお，本READMEはvscode版になっている．過去に公開したeclipse版は↓を参照すること
   - https://github.com/igakilab/multiple-dwr/tree/v1.0
 
-# 準備
-## 準備(ソフトウェアのインストール)
+# 2. 準備
+
+## 2.1. 準備(ソフトウェアのインストール)
 - ``C:\igakilab``ディレクトリを作成する．すべてのソフトウェアのセットアップ完了時には以下のようなディレクトリ構成になる．以降このチュートリアルでは，このディレクトリ構成に従っているものとして説明を行う．また，バージョン番号はチュートリアル作成時のもの．
 ```
 C:\igakilab\apache-tomcat-8.5.45\bin
@@ -71,12 +74,12 @@ C:\igakilab\vscode-portable-win64-1.XX.Y-Z\vscode-portable.exe
 - [PostgreSQL Portable](https://github.com/garethflowers/postgresql-portable/releases/) から zipファイルをダウンロードし，igakilab以下に解凍する．
   - DBMS．データベースを利用する際に便利なので利用している．別に他のDBMSでも構わない．
 
-## 準備(環境変数の設定)
+## 2.2. 準備(環境変数の設定)
 - Windowsの環境変数設定
   - 左下のWindowsアイコンを右クリック->システム->[バージョン情報]を下にスクロールしたところにある[関連設定]の[システム情報]をクリック->[システムの詳細設定]->[環境変数]をクリック->[ユーザー環境変数]の中の[Path]を選択し，[編集]をクリック
   - [環境変数名の編集]画面が開くので，[新規]をクリックし，``C:\igakilab\openjdk1.8.0.212\bin``を入力する(インストールしたopenjdkのフォルダ名を確認すること)．もう一度[新規]をクリックし，``C:\igakilab\gradle-5.6\bin``を入力する．最後にOKをクリックして編集画面を閉じる．
 
-## 準備(vscode拡張機能のインストール)
+## 2.3. 準備(vscode拡張機能のインストール)
 - vscodeを起動し，画面左端にあるアイコンの一番下のもの(Extensions)をクリックし，下記の拡張機能をインストールする
   - 検索窓に拡張機能名を入力し，対象の拡張機能を選択して，InstallをクリックすればOK．
 - Java Extension Pack
@@ -86,7 +89,7 @@ C:\igakilab\vscode-portable-win64-1.XX.Y-Z\vscode-portable.exe
   - おまけ．全角スペースを強調表示してくれる．
 - 拡張機能をインストールしたらvscodeを再起動する
 
-## 準備(プロジェクトフォルダの作成と初期設定)
+## 2.4. 準備(プロジェクトフォルダの作成と初期設定)
 - ``multiple-dwr``という名前のディレクトリをどこかに作成する（どこでも良い）
 - vscodeを起動し，[ファイル]->[フォルダーを開く]から``multiple-dwr``フォルダーを開く
 - vscode左下の歯車アイコンをクリックし，[設定]をクリック
@@ -134,13 +137,13 @@ C:\igakilab\vscode-portable-win64-1.XX.Y-Z\vscode-portable.exe
 }
 ```
 
-## 準備(Javaプロジェクトの設定とディレクトリの作成)
+## 2.5. 準備(Javaプロジェクトの設定とディレクトリの作成)
 - vscodeの[ターミナル]->[新しいターミナル]をクリックする
 - 恐らくpowershellが開くので，ターミナル画面でEnterしてから，`gradle init --type java-application`と入力してEnterする
 - 入力項目がいくつか表示されるが，``Source package``以外はデフォルトでOK.``Source package``のところだけ`jp.igakilab.dwr.multiple`と入力する．その後，java及びgradleのPATH設定が正常に行われていれば，自動的に指定したパッケージディレクトリなどが作成される
 - 追加で`multiple-dwr\src\main\webapp\WEB-INF`ディレクトリを作成する．大文字小文字など間違えないようにすること．
 
-## 準備(build.gradleの設定)
+## 2.6. 準備(build.gradleの設定)
 - Web application ARchive(WARファイル)を作成するためにGradleというビルドツールを利用する．↑のJavaプロジェクトの設定が完了していれば，`build.gradle`ファイルができているので，vscodeで開くこと
 - `build.gradle` ファイルの中身をすべて消し，↓をコピペすること
 ```gradle
@@ -167,7 +170,7 @@ dependencies{
 - 保存してしばらくするとdependenciesで指定されたライブラリが自動的にDLされる（なのでネットワークに接続した状態で実施すること）．
 - dependenciesの1つ目はDWRのライブラリ，2つ目はloggingツール（DWRが利用する）．3つ目はテストツール．4,5個目はデータベース利用のためのライブラリになっている．
 
-## 準備(Tomcat for Javaの設定)
+## 2.7. 準備(Tomcat for Javaの設定)
 - vscodeのTomcatプラグインの設定を行う
   - 参考：https://code.visualstudio.com/docs/java/java-tomcat-jetty
 - vscode画面左下に[TOMCAT SERVERS]というメニューが表示されている（左下歯車アイコンのすぐ右側）のでクリックする
@@ -175,9 +178,9 @@ dependencies{
 - ダイヤログが表示されるので，`C:\igakilab\apache-tomcat-8.5.45` を指定して，[Select Tomcat Directory]をクリックする．
 - [TOMCAT SERVERS]の下に`■ apache-tomcat-8.5.45` (四角は赤色)と表示されればOK
 
-# DWRを利用したWebアプリケーション開発
+# 3. DWRを利用したWebアプリケーション開発
 
-## DWRを利用してREST形式でJavaのメソッドを呼ぶ
+## 3.1. DWRを利用してREST形式でJavaのメソッドを呼ぶ
 - DWRを利用することでHTTP/GETの形式でJavaのメソッドを呼ぶことができる．返り値はjsonになる．
 * multiple-dwrプロジェクトの`src\main\java`フォルダにパッケージを作成する（例：jp.igakilab.dwr.multiple）
 * 作成したパッケージ内にMultiplePrinterクラスを作成する．
@@ -187,7 +190,7 @@ dependencies{
 * web.xmlはdwrを利用するための設定(tomcat用)で，dwrの利用（デバッグモード付き）とREST呼び出しのための設定が記述されている．dwr.xmlはJavaのメソッドやオブジェクトをDWRに認識させるための設定になる．
   * 参考：https://github.com/igakilab/multiple-dwr/tree/1df86590ccf348c0c495be00cb9a2036e3fb152b/src/main/webapp/WEB-INF
 
-#### web.xml
+#### 3.1.1. web.xml
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE web-app
@@ -215,7 +218,7 @@ dependencies{
 </web-app>
 ```
 
-#### dwr.xml
+#### 3.1.2. dwr.xml
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE dwr PUBLIC
@@ -252,7 +255,7 @@ BUILD SUCCESSFUL in 2s
 > コラム
 > * 上はtomcat pluginでの実行例なので，最終的に完成したWarをプラグインを利用せずに実行したい場合は，`C:\igakilab\apache-tomcat-8.5.45\webapps` に`multiple-dwr.war` ファイルを直接置き，tomcatのbinディレクトリ内のstartup.batを実行すると良い．tomcatが起動し，multiple-dwr.warが配備（デプロイ）される．
 
-## JavaScriptからDWR(Direct Web Remoting)を利用してJavaのメソッドを呼ぶ
+## 3.2. JavaScriptからDWR(Direct Web Remoting)を利用してJavaのメソッドを呼ぶ
 * 上記で作成したmultiple-dwrプロジェクトに追加する形で実施する．
 - 画面左下の[TOMCAT SERVERS]の下の[● apache-tomcat-8.5.45]を右クリックして[Stop]を選択しておくこと．
 - 作成したパッケージに`InvalidValueException.java`, `MultipleForm.java` を新規に追加し，`MultiplePrinter` クラスに`execute` メソッド（JavaScriptからMultipleFormに入った値を受け取り，解釈して返すメソッド）を追加すること
@@ -289,8 +292,9 @@ BUILD SUCCESSFUL in 2s
 * 正常にtomcatが起動したのを確認後，http://localhost:8080/multiple-dwr/index.html にアクセス
 * 画面が正常にでて，maxと書いてあるテキストフィールドに整数値，multipleに倍数の値を入れて，正常に実行できたらOK
 
-## PostgresqlとMybatisを使ってDBを利用するWebアプリケーションを開発してみる
-### 準備(Database)
+## 3.3. PostgresqlとMybatisを使ってDBを利用するWebアプリケーションを開発してみる
+
+### 3.3.1. 準備(Database)
  - DBはなんでも良い．たまたまPortable版（インストール作業がファイル解凍だけで環境を汚さない）のPostgreSQLが見つかったので今回はそれを選択した．動かすときはPostgreSQLPortable.exeを実行すれば良い．
  - PostgreSQLPortable.exeを起動すると，「Warning: Console code page (1252) differs..」という警告がでるので，一度「\q」と打って終了し，以下のページに従って`C:\igakilab\PostgreSQLPortable_10.4.1\App\PgSQL`にある`pgsql.cmd`の6行目あたりにある「chcp 1252 > null」という行を「chcp 932 > null」に変更してから，もう一度PostgreSQLPortable.exeを実行する．
    - 参考：http://kenpg2.seesaa.net/article/415046025.html
@@ -325,7 +329,7 @@ INSERT 0 1
 ```
 - postgresqlの操作についてはこちらを参考に： https://qiita.com/aosho235/items/c657e2fcd15fa0647471
 
-### 準備（OR Mapper (MyBatis)）
+### 3.3.2. 準備（OR Mapper (MyBatis)）
 - OR Mapper: DBとJavaのクラスの間を仲介するライブラリのこと．今回はMyBatis（ http://www.mybatis.org/mybatis-3/ja/ ) を利用する．
 - mybatisライブラリ3.5.2を利用する．DLやビルドパスの設定等はgradleが勝手にやってくれる．
 - PostgreSQLを利用するためのJDBCドライバ（要はJavaからpostgresqlを利用するためのソフトウェア）をセットアップする．詳細はgradleが(以下略
@@ -340,7 +344,7 @@ INSERT 0 1
     - Mybatisを介してDBにアクセスするための処理が書かれている（どんなプログラムでも再利用可能）
 - ここまではどんなWebアプリケーションでもほぼ同じ(ProductMapper.xmlやDBの内容登録（insert）等は除く)であるため，再利用可能．以下がアプリによって異なるところ．
 
-### postgresqlにアクセスするJavaアプリケーションの実装
+### 3.3.3. postgresqlにアクセスするJavaアプリケーションの実装
 - 下記のファイルを指定されたパッケージに追加する
   - jp.igakilab.dwr.mybatis.Food.java
     - https://github.com/igakilab/multiple-dwr/blob/4ca442ae36236509f4ca2fde6c6d8128bc592759/src/main/java/jp/igakilab/dwr/mybatis/Food.java
@@ -349,7 +353,7 @@ INSERT 0 1
     - https://github.com/igakilab/multiple-dwr/blob/4ca442ae36236509f4ca2fde6c6d8128bc592759/src/main/java/jp/igakilab/dwr/mybatis/ProductPrinter.java
     - Webアプリケーションとして公開するメソッドを実装したクラス（テスト用にmainメソッドも実装している）
 
-#### 確認
+#### 3.3.3.1. 確認
 - PostgreSQLが実行されていることを確認する
 - jp.igakilab.dwr.mybatis.ProductPrinterを選択し，F5を押す．
 - `.vscode\launch.json` ファイルが開いて，ProductPrinterクラスの`main`メソッドを実行する設定が自動的に行われるので，そのままもう一度`jp.igakilab.dwr.mybatis.ProductPrinter`を選択し，F5を押す．
@@ -367,7 +371,7 @@ peach
 
 - これが表示されなければ，mybatisのconfigかDBUtility.java，ProductPrinterクラスなどが何か間違っている(まだDWRとは無関係)．
 
-### postgresqlにアクセスするWebアプリケーションの実装
+### 3.3.4. postgresqlにアクセスするWebアプリケーションの実装
 - 画面左下の[TOMCAT SERVERS]の下の[● apache-tomcat-8.5.45]を右クリックして[Stop]を選択しておくこと．
 - dwr.xml (WebContent/WEB-INF/内）の修正
   - https://github.com/igakilab/multiple-dwr/blob/4ca442ae36236509f4ca2fde6c6d8128bc592759/src/main/webapp/WEB-INF/dwr.xml
@@ -410,7 +414,7 @@ BUILD SUCCESSFUL in 2s
 ]
 ```
 
-### postgresqlのデータをListで受け取ってhtmlにjsで表示するサンプル
+### 3.3.5. postgresqlのデータをListで受け取ってhtmlにjsで表示するサンプル
 - https://github.com/igakilab/multiple-dwr/commit/caae18c9088c3f71a8cbd38b43073da8187899f1
 - この↑array.html実装．
 - http://localhost:8080/multiple-dwr/array.html にアクセスし，Sendボタンをクリックすると表示される．
@@ -425,30 +429,31 @@ BUILD SUCCESSFUL in 2s
 - array.htmlのL19のforEachでは，dataから1つずつ取得し，1つ分をfoodという変数にほりこんでいる．forEachの中ではfood.nameなどで各値を取得している．
 - data変数に何が入っているかは，L17のconsole.log(data)でブラウザの検証機能のconsole画面などで確認できるようになっている．
 
-### htmlで作成したjsonオブジェクトの配列をdwr経由でJavaにわたすサンプル
+### 3.3.6. htmlで作成したjsonオブジェクトの配列をdwr経由でJavaにわたすサンプル
 - https://github.com/igakilab/multiple-dwr/commit/871cfeca270888a503f5304e244865073f766699
   - これの` public void insertFood(ArrayList<Food> foodList) `とJSのinsertArray()が相当する
 - http://localhost:8080/multiple-dwr/array.html にアクセスし，InsertArrayボタンをクリックすると，console.logに`insert_food実行完了`と表示され，tomcatのコンソールにさんまやぶり大根の情報が表示される．
 - html側で，javascriptが作成した辞書型の配列をinsertFoodにわたすと，Java側でArrayList<Food>として受け取ることができる．
 - 注意：`gradlw war` を実行して，Tomcatを実行したままwarを更新しても，Javaのファイルが更新されないことがあるので（おそらくtomcatの問題），その場合は一度TomcatをStopしてから書き込むこと．
 
-### htmlで作成したjsonオブジェクトの配列をdwr経由でJavaにわたし，Postgresqlに書き込むサンプル
+### 3.3.7. htmlで作成したjsonオブジェクトの配列をdwr経由でJavaにわたし，Postgresqlに書き込むサンプル
 - https://github.com/igakilab/multiple-dwr/commit/f7b46ab5e6df2e8386af638328b86f1a5557f9bc
   - ポイント：public void insertFood(ArrayList<Food> foodList)で，FoodクラスのArrayListを受け取り，拡張for文で一つずつFoodクラスのオブジェクトをinsertしているところ．なお，最後にsession.commit()を呼ばないとDBへの書き込みは行われない．
 - http://localhost:8080/multiple-dwr/array.html にアクセスし，InsertArrayボタンをクリックすると，console.logに`insert_food実行完了`と表示され，postgresqlのproduct dbのfoodテーブルに書き込まれる．
 
-### 配列を含むjsonオブジェクトをhtml(js)からdwr経由でJavaにわたすサンプル
+### 3.3.8. 配列を含むjsonオブジェクトをhtml(js)からdwr経由でJavaにわたすサンプル
 - https://github.com/igakilab/multiple-dwr/commit/db0475d0488893f2f88125faae63fac8fae6f19d
   - jsonオブジェクトと同じ構造のJavaのオブジェクト（この場合はDeck.java）を作成し，Java側の仮引数で受け取ると良い．jsonの配列はJava側でArrayListとして受け取れる
 - http://localhost:8080/multiple-dwr/array.html にアクセスし，InsertCardsボタンをクリックすると，console.logに`insertDeck実行完了`と表示され，tomcatのコンソールにユーザ名及び数値が表示される．
 
-### クッキーを使うサンプル
+### 3.3.9. クッキーを使うサンプル
 - https://github.com/igakilab/multiple-dwr/commit/19041b3ef329ac7eeddd0b873eb718dc1a0a2576
   - jquery cookieを利用して，playerというkeyにフォームで入力した文字列をクッキーとして保存して利用するサンプル．
   - http://localhost:8080/multiple-dwr/game.html にアクセスし，テキストフィールドに文字列を入力してSendボタンをクリックすると，クッキーに値が保存されて，logoutボタンが表示されまる．logoutボタンをクリックするとクッキーが削除されて，またSendボタンが表示される．
 
-# おまけ
-## jUnitでテストを行う。
+# 4. おまけ
+
+## 4.1. jUnitでテストを行う。
 - `multiple-dwr\src\test\java\jp\igakilab\dwr\multiple`に下記クラス（MultiplePrinterTest.java）を実装する
   * https://github.com/igakilab/multiple-dwr/blob/1975ac857be185d56cc7be74ad02eb75cf5cdfdb/src/test/java/jp/igakilab/dwr/multiple/MultiplePrinterTest.java
 - vscodeの[ターミナル]が開いていればそこに，開いていない場合は[ターミナル]->[新しいターミナル]をクリックしてターミナルを開く．
