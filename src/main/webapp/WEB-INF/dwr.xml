@@ -4,6 +4,9 @@
     "http://getahead.org/dwr//dwr30.dtd">
 <dwr>
   <allow>
+    <create creator="new" javascript="MultipleLogin">
+      <param name="class" value="jp.igakilab.dwr.multiple.MultipleLogin"/>
+    </create>
     <create creator="new" javascript="MultiplePrinter">
       <param name="class" value="jp.igakilab.dwr.multiple.MultiplePrinter"/>
     </create>
