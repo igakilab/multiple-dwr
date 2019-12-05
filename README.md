@@ -442,6 +442,11 @@ BUILD SUCCESSFUL in 2s
   - jsonオブジェクトと同じ構造のJavaのオブジェクト（この場合はDeck.java）を作成し，Java側の仮引数で受け取ると良い．jsonの配列はJava側でArrayListとして受け取れる
 - http://localhost:8080/multiple-dwr/array.html にアクセスし，InsertCardsボタンをクリックすると，console.logに`insertDeck実行完了`と表示され，tomcatのコンソールにユーザ名及び数値が表示される．
 
+### クッキーを使うサンプル
+- https://github.com/igakilab/multiple-dwr/commit/19041b3ef329ac7eeddd0b873eb718dc1a0a2576
+  - jquery cookieを利用して，playerというkeyにフォームで入力した文字列をクッキーとして保存して利用するサンプル．
+  - http://localhost:8080/multiple-dwr/game.html にアクセスし，テキストフィールドに文字列を入力してSendボタンをクリックすると，クッキーに値が保存されて，logoutボタンが表示されまる．logoutボタンをクリックするとクッキーが削除されて，またSendボタンが表示される．
+
 # おまけ
 ## jUnitでテストを行う。
 - `multiple-dwr\src\test\java\jp\igakilab\dwr\multiple`に下記クラス（MultiplePrinterTest.java）を実装する
