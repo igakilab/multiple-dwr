@@ -28,6 +28,7 @@
     - [htmlで作成したjsonオブジェクトの配列をdwr経由でJavaにわたし，Postgresqlに書き込むサンプル](#htmlで作成したjsonオブジェクトの配列をdwr経由でjavaにわたしpostgresqlに書き込むサンプル)
     - [配列を含むjsonオブジェクトをhtml(js)からdwr経由でJavaにわたすサンプル](#配列を含むjsonオブジェクトをhtmljsからdwr経由でjavaにわたすサンプル)
     - [クッキーを使うサンプル](#クッキーを使うサンプル)
+    - [DBのupdateを実行する](#dbのupdateを実行する)
 - [おまけ](#おまけ)
   - [jUnitでテストを行う。](#junitでテストを行う)
 
@@ -450,6 +451,9 @@ BUILD SUCCESSFUL in 2s
 - https://github.com/igakilab/multiple-dwr/commit/19041b3ef329ac7eeddd0b873eb718dc1a0a2576
   - jquery cookieを利用して，playerというkeyにフォームで入力した文字列をクッキーとして保存して利用するサンプル．
   - http://localhost:8080/multiple-dwr/game.html にアクセスし，テキストフィールドに文字列を入力してSendボタンをクリックすると，クッキーに値が保存されて，logoutボタンが表示されまる．logoutボタンをクリックするとクッキーが削除されて，またSendボタンが表示される．
+
+### 3.3.10. DBのupdateを実行する
+- http://localhost:8080/multiple-dwr/array.html にアクセスし，GetFoodListを一度押して，melonの名前と値段を確認した後，Update Melon Priceボタンをクリックしたあとにもう一度GetFoodListを実行する．melonの値段が100000になっていればupdateが成功している．
 
 # 4. おまけ
 

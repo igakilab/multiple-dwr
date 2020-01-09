@@ -46,6 +46,16 @@
         errorHandler: updateErrorMessage
       });
     }
+    function updateMelonPrice() {
+      var melon = { "name": "melon", "price": 100000 };
+      ProductPrinter.updateFood(melon, {
+        callback: function () {
+          console.log("updateMelonPrice実行完了")
+        },
+        errorHandler: updateErrorMessage
+      });
+    }
+
   </script>
 </head>
 
@@ -55,6 +65,8 @@
       <input value="GetFoodList" type="button" onclick="update()" />
       <input value="InsertArray" type="button" onclick="insertArray()" />
       <input value="InsertCards" type="button" onclick="insertCards()" />
+      <input value="Update Melon Price" type="button" onclick="updateMelonPrice()" />
+
     </form>
   </p>
   <p>

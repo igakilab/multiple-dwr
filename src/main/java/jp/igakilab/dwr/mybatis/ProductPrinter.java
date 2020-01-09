@@ -45,9 +45,20 @@ public class ProductPrinter {
     }
   }
 
+  public void updateFood(Food food) {
+    try (SqlSession session = factory.openSession()) {
+      int ret = session.update("igakilab.mybatis.ProductMapper.updateFood", food);
+      session.commit();// これを呼び出すと書き込まれる
+    }
+  }
+
   public static void main(String[] args) {
     ProductPrinter pp = new ProductPrinter();
-    pp.execute();
+    // pp.execute();
+    Food food = new Food();
+    food.setName("melon");
+    food.setPrice(10000);
+    pp.updateFood(food);
   }
 
 }
