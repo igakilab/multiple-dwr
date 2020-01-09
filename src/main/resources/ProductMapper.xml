@@ -10,4 +10,12 @@
     insert into food (name,price)
     values (#{name}, #{price})
   </insert>
+  <update id="updateFood" parameterType="jp.igakilab.dwr.mybatis.Food">
+    update food
+    set
+      name = #{name},
+      price = #{price}
+      where name = #{name}
+  </update>
+
 </mapper>
