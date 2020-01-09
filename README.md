@@ -453,6 +453,8 @@ BUILD SUCCESSFUL in 2s
   - http://localhost:8080/multiple-dwr/game.html にアクセスし，テキストフィールドに文字列を入力してSendボタンをクリックすると，クッキーに値が保存されて，logoutボタンが表示されまる．logoutボタンをクリックするとクッキーが削除されて，またSendボタンが表示される．
 
 ### 3.3.10. DBのupdateを実行する
+- https://github.com/igakilab/multiple-dwr/commit/ecfb6089233bd45232f8ec5b4930719dd71fed98
+  - mybatisのupdateのテスト．ProductPrinter.javaのmainメソッド内の処理はテスト用．
 - http://localhost:8080/multiple-dwr/array.html にアクセスし，GetFoodListを一度押して，melonの名前と値段を確認した後，Update Melon Priceボタンをクリックしたあとにもう一度GetFoodListを実行する．melonの値段が100000になっていればupdateが成功している．
 
 # 4. おまけ
